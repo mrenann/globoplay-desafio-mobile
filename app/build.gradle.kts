@@ -1,8 +1,14 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
+
+val apiPropertiesFile = rootProject.file("api.properties")
+val apiProperties = Properties()
+if (apiPropertiesFile.exists()) apiProperties.load(apiPropertiesFile.inputStream())
 
 android {
     namespace = "com.mrenann.globoplay"
@@ -16,11 +22,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", "${apiProperties["TMDB_KEY"]}")
+        buildConfigField("String", "BASE_URL", "${apiProperties["TMDB_URL"]}")
+        buildConfigField("String", "BASE_IMAGE_URL", "${apiProperties["TMDB_IMAGE_URL"]}")
+
+
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -36,6 +48,8 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+
     }
 }
 
