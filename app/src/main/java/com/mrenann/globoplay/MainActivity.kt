@@ -6,7 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.mrenann.globoplay.di.appModule
+import cafe.adriel.voyager.navigator.Navigator
+import com.mrenann.globoplay.core.di.networkModule
+import com.mrenann.globoplay.homeScreen.di.TvDiscoverModule
+import com.mrenann.globoplay.homeScreen.presentation.HomeScreen
 import com.mrenann.globoplay.ui.theme.GloboplayTheme
 import org.koin.core.context.startKoin
 
@@ -16,13 +19,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         startKoin {
-            modules(appModule)
+            try {
+                modules(
+                    networkModule,
+                    TvDiscoverModule
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
-        setContent {
-            GloboplayTheme {
 
-            }
+        setContent {
+            Navigator(HomeScreen)
         }
     }
 }

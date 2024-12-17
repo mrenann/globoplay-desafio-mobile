@@ -17,6 +17,15 @@ val networkModule = module {
     // Provide ParamsInterceptor
     single { ParamsInterceptor() }
 
+    single {
+        HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        }
+    }
 
     single {
         OkHttpClient.Builder()
