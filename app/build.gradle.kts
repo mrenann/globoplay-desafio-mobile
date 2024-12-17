@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
 }
 
 val apiPropertiesFile = rootProject.file("api.properties")
@@ -80,9 +79,6 @@ dependencies {
 
     implementation(libs.voyager.navigator)
     implementation(libs.voyager.koin)
-
-    implementation(libs.lyricist)
-    ksp(libs.lyricist.processor)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
