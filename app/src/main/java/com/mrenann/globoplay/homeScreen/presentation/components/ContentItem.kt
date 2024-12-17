@@ -33,12 +33,13 @@ fun ContentItem(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(posterUrl)
                 .crossfade(true)
+
                 .build(),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(3.dp)),
-            contentScale = ContentScale.FillHeight
+            contentScale = ContentScale.FillHeight,
         )
     }
 
