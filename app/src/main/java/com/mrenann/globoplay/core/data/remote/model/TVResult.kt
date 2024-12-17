@@ -1,9 +1,9 @@
-package com.mrenann.globoplay.core.data.remote.response
+package com.mrenann.globoplay.core.data.remote.model
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Result(
+data class TVResult(
     @SerializedName("adult")
     val adult: Boolean = false,
     @SerializedName("backdrop_path")
