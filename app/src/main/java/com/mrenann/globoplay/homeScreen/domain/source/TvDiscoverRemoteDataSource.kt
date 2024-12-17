@@ -1,12 +1,18 @@
 package com.mrenann.globoplay.homeScreen.domain.source
 
-import com.mrenann.globoplay.core.data.remote.response.DiscoverTVResponse
+import com.mrenann.globoplay.core.data.remote.model.TVResult
+import com.mrenann.globoplay.core.data.remote.response.DiscoverMediaResponse
+import com.mrenann.globoplay.core.paging.TvBrazilianPagingSource
 import com.mrenann.globoplay.core.paging.TvPagingSource
 
-interface TvDiscoverRemoteDataSource {
+interface TvDiscoverRemoteDataSource : DiscoverRemoteDataSource<TVResult> {
 
-    fun getDiscoverTvPagingSource(): TvPagingSource
+    override fun getPagingSource(): TvPagingSource
+    override fun getBrazilianPagingSource(): TvBrazilianPagingSource
 
-    suspend fun getDiscoverTv(page: Int): DiscoverTVResponse
+    override suspend fun getDiscover(
+        page: Int,
+        isFromBrazil: Boolean
+    ): DiscoverMediaResponse<TVResult>
 
 }

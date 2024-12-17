@@ -1,43 +1,40 @@
 package com.mrenann.globoplay.homeScreen.data.source
 
 import com.mrenann.globoplay.core.data.remote.MediaService
-import com.mrenann.globoplay.core.data.remote.model.TVResult
+import com.mrenann.globoplay.core.data.remote.model.MovieResult
 import com.mrenann.globoplay.core.data.remote.response.DiscoverMediaResponse
-import com.mrenann.globoplay.core.paging.TvBrazilianPagingSource
-import com.mrenann.globoplay.core.paging.TvPagingSource
+import com.mrenann.globoplay.core.paging.MovieBrazilianPagingSource
+import com.mrenann.globoplay.core.paging.MoviePagingSource
 import com.mrenann.globoplay.core.util.Constants.ORIGINAL_LANGUAGE_PARAM
 import com.mrenann.globoplay.core.util.Constants.ORIGINAL_LANGUAGE_VALUE
 import com.mrenann.globoplay.core.util.Constants.ORIGINCOUNTRY_PARAM
 import com.mrenann.globoplay.core.util.Constants.ORIGINCOUNTRY_VALUE
-import com.mrenann.globoplay.core.util.Constants.WITHNETWORKS_PARAM
-import com.mrenann.globoplay.core.util.Constants.WITHNETWORKS_VALUE
-import com.mrenann.globoplay.homeScreen.domain.source.TvDiscoverRemoteDataSource
+import com.mrenann.globoplay.homeScreen.domain.source.MovieDiscoverRemoteDataSource
 
-class TvDiscoverRemoteDataSourceImpl(
+class MovieDiscoverRemoteDataSourceImpl(
     private val service: MediaService
-) : TvDiscoverRemoteDataSource {
+) : MovieDiscoverRemoteDataSource {
 
-    override fun getPagingSource(): TvPagingSource {
-        return TvPagingSource(this)
+    override fun getPagingSource(): MoviePagingSource {
+        return MoviePagingSource(this)
     }
 
-    override fun getBrazilianPagingSource(): TvBrazilianPagingSource {
-        return TvBrazilianPagingSource(this)
+    override fun getBrazilianPagingSource(): MovieBrazilianPagingSource {
+        return MovieBrazilianPagingSource(this)
     }
 
     override suspend fun getDiscover(
         page: Int,
         isFromBrazil: Boolean
-    ): DiscoverMediaResponse<TVResult> {
+    ): DiscoverMediaResponse<MovieResult> {
         val queryParams = mutableMapOf("page" to page.toString())
 
         if (isFromBrazil) {
-            queryParams[WITHNETWORKS_PARAM] = WITHNETWORKS_VALUE
             queryParams[ORIGINCOUNTRY_PARAM] = ORIGINCOUNTRY_VALUE
             queryParams[ORIGINAL_LANGUAGE_PARAM] = ORIGINAL_LANGUAGE_VALUE
         }
 
-        return service.getDiscoverTv(
+        return service.getDiscoverMovie(
             queryParams = queryParams
         )
     }

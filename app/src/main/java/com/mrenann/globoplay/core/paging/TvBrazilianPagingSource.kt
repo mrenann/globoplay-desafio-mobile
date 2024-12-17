@@ -9,7 +9,7 @@ import com.mrenann.globoplay.homeScreen.data.mapper.toSerieFromTv
 import com.mrenann.globoplay.homeScreen.domain.source.TvDiscoverRemoteDataSource
 import java.io.IOException
 
-class TvPagingSource(
+class TvBrazilianPagingSource(
     private val remoteDataSource: TvDiscoverRemoteDataSource
 ) : PagingSource<Int, Media>() {
 
@@ -25,7 +25,7 @@ class TvPagingSource(
         return try {
             val page = params.key ?: 1
             val response: DiscoverMediaResponse<TVResult> =
-                remoteDataSource.getDiscover(page = page)
+                remoteDataSource.getDiscover(page = page, isFromBrazil = true)
             val tvSeries = response.results
 
 

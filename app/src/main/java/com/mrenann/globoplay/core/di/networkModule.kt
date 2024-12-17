@@ -1,8 +1,8 @@
 package com.mrenann.globoplay.core.di
 
 import com.mrenann.globoplay.BuildConfig
+import com.mrenann.globoplay.core.data.remote.MediaService
 import com.mrenann.globoplay.core.data.remote.ParamsInterceptor
-import com.mrenann.globoplay.core.data.remote.TVService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -44,6 +44,6 @@ val networkModule = module {
             .client(get<OkHttpClient>()) // Inject OkHttpClient
             .addConverterFactory(get<GsonConverterFactory>()) // Inject GsonConverterFactory
             .build()
-            .create(TVService::class.java)
+            .create(MediaService::class.java)
     }
 }

@@ -9,6 +9,12 @@ object Constants {
     const val WATCH_REGION_VALUE = "BR"
     const val WATCHPROVIDERS_PARAM = "with_watch_providers"
     const val WATCHPROVIDERS_VALUE = "307"
-    const val PAGE_PARAM = "page"
+
+    const val WITHNETWORKS_PARAM = "with_networks"
+    const val WITHNETWORKS_VALUE = "60"
+    const val ORIGINCOUNTRY_PARAM = "with_origin_country"
+    const val ORIGINCOUNTRY_VALUE = "BR"
+    const val ORIGINAL_LANGUAGE_PARAM = "with_original_language"
+    const val ORIGINAL_LANGUAGE_VALUE = "pt"
 
 }

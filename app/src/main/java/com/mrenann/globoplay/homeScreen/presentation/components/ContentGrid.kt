@@ -14,12 +14,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.mrenann.globoplay.core.domain.model.TVSerie
+import com.mrenann.globoplay.core.domain.model.Media
 
 @Composable
 fun ContentGrid(
     title: String,
-    pagingItems: LazyPagingItems<TVSerie>,
+    pagingItems: LazyPagingItems<Media>,
     paddingValues: PaddingValues,
     onClick: (id: Int) -> Unit
 ) {
@@ -27,7 +27,7 @@ fun ContentGrid(
         Text(
             modifier = Modifier.padding(all = 10.dp),
             fontSize = 18.sp,
-            text = "Séries",
+            text = title,
             fontWeight = FontWeight.Bold,
             color = Color.White
         )

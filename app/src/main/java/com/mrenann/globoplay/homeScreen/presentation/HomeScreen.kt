@@ -3,6 +3,7 @@ package com.mrenann.globoplay.homeScreen.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +20,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -44,8 +46,8 @@ import coil3.request.error
 import coil3.request.placeholder
 import com.mrenann.globoplay.R
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentGrid
-import com.mrenann.globoplay.homeScreen.presentation.screenModels.TvDiscoverScreenModel
-import com.mrenann.globoplay.homeScreen.presentation.screenModels.TvDiscoverScreenModel.State
+import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel
+import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel.State
 import com.mrenann.globoplay.ui.theme.Background
 
 
@@ -66,7 +68,7 @@ object HomeScreen : Screen {
         val appBarBackgroundColor = if (isScrolled) Color.Black else Color.Transparent
         val textAppBarColor = if (isScrolled) Color.White else Color.Black
 
-        val screenModel = koinScreenModel<TvDiscoverScreenModel>()
+        val screenModel = koinScreenModel<DiscoverScreenModel>()
         val state by screenModel.state.collectAsState()
 
         Box(
@@ -138,17 +140,49 @@ object HomeScreen : Screen {
                         .background(Background)
                         .padding(innerPadding) // Adjust for the top bar
                 ) {
-                    items(3) { index ->
+                    items(1) { index ->
                         when (state) {
                             is State.Init -> {}
-                            is State.Loading -> {}
+                            is State.Loading -> {
+                                Column(
+                                    Modifier.fillMaxSize()
+                                ) {
+                                    Text("CARREGANDO...")
+                                }
+                            }
+
                             is State.Result -> {
                                 val series =
                                     (state as State.Result).state.tvSeries.collectAsLazyPagingItems()
+                                val seriesBr =
+                                    (state as State.Result).state.tvSeriesFromBrazil.collectAsLazyPagingItems()
+
+                                val movies =
+                                    (state as State.Result).state.movies.collectAsLazyPagingItems()
+                                val moviesBr =
+                                    (state as State.Result).state.moviesFromBrazil.collectAsLazyPagingItems()
 
                                 ContentGrid(
                                     title = "Séries",
                                     pagingItems = series,
+                                    paddingValues = PaddingValues(0.dp),
+                                    onClick = { id -> println(id) }
+                                )
+                                ContentGrid(
+                                    title = "Séries do Brasil",
+                                    pagingItems = seriesBr,
+                                    paddingValues = PaddingValues(0.dp),
+                                    onClick = { id -> println(id) }
+                                )
+                                ContentGrid(
+                                    title = "Filmes",
+                                    pagingItems = movies,
+                                    paddingValues = PaddingValues(0.dp),
+                                    onClick = { id -> println(id) }
+                                )
+                                ContentGrid(
+                                    title = "Filmes do Brasil",
+                                    pagingItems = moviesBr,
                                     paddingValues = PaddingValues(0.dp),
                                     onClick = { id -> println(id) }
                                 )
