@@ -79,7 +79,12 @@ dependencies {
 
     implementation(libs.voyager.navigator)
     implementation(libs.voyager.koin)
+
     implementation(libs.androidx.paging.common.android)
+    implementation(libs.androidx.paging.compose.android)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
