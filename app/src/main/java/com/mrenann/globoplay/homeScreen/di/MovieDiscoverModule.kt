@@ -9,26 +9,24 @@ import com.mrenann.globoplay.homeScreen.domain.usecase.GetMovieDiscoverUseCase
 import com.mrenann.globoplay.homeScreen.domain.usecase.GetMovieDiscoverUseCaseImpl
 import org.koin.dsl.module
 
-val MovieDiscoverModule = module {
+val MovieDiscoverModule =
+    module {
 
-    single<MovieDiscoverRemoteDataSource> {
-        MovieDiscoverRemoteDataSourceImpl(
-            service = get<MediaService>()
-        )
+        single<MovieDiscoverRemoteDataSource> {
+            MovieDiscoverRemoteDataSourceImpl(
+                service = get<MediaService>(),
+            )
+        }
+
+        single<MovieDiscoverRepository> {
+            MovieDiscoverRepositoryImpl(
+                remoteDataSource = get<MovieDiscoverRemoteDataSource>(),
+            )
+        }
+
+        single<GetMovieDiscoverUseCase> {
+            GetMovieDiscoverUseCaseImpl(
+                repository = get<MovieDiscoverRepository>(),
+            )
+        }
     }
-
-
-    single<MovieDiscoverRepository> {
-        MovieDiscoverRepositoryImpl(
-            remoteDataSource = get<MovieDiscoverRemoteDataSource>()
-        )
-    }
-
-    single<GetMovieDiscoverUseCase> {
-        GetMovieDiscoverUseCaseImpl(
-            repository = get<MovieDiscoverRepository>()
-        )
-
-    }
-
-}

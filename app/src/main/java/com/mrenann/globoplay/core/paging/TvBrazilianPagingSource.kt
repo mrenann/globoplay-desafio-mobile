@@ -10,10 +10,8 @@ import com.mrenann.globoplay.homeScreen.domain.source.TvDiscoverRemoteDataSource
 import java.io.IOException
 
 class TvBrazilianPagingSource(
-    private val remoteDataSource: TvDiscoverRemoteDataSource
+    private val remoteDataSource: TvDiscoverRemoteDataSource,
 ) : PagingSource<Int, Media>() {
-
-
     override fun getRefreshKey(state: PagingState<Int, Media>): Int? {
         return state.anchorPosition?.let { position ->
             val page = state.closestPageToPosition(position)
@@ -28,11 +26,10 @@ class TvBrazilianPagingSource(
                 remoteDataSource.getDiscover(page = page, isFromBrazil = true)
             val tvSeries = response.results
 
-
             LoadResult.Page(
                 data = tvSeries.toSerieFromTv(),
                 prevKey = if (page == 1) null else page - 1,
-                nextKey = if (tvSeries.isEmpty()) null else page + 1
+                nextKey = if (tvSeries.isEmpty()) null else page + 1,
             )
         } catch (exception: IOException) {
             exception.printStackTrace()
@@ -46,6 +43,4 @@ class TvBrazilianPagingSource(
     companion object {
         private const val LIMIT_PAGE = 10
     }
-
-
 }

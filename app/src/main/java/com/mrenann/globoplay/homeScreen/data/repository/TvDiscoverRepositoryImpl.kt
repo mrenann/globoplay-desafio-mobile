@@ -9,17 +9,15 @@ import com.mrenann.globoplay.homeScreen.domain.source.TvDiscoverRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 
 class TvDiscoverRepositoryImpl(
-    private val remoteDataSource: TvDiscoverRemoteDataSource
+    private val remoteDataSource: TvDiscoverRemoteDataSource,
 ) : TvDiscoverRepository {
-
     override fun getTvDiscover(pagingConfig: PagingConfig): Flow<PagingData<Media>> {
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = {
                 remoteDataSource.getPagingSource()
-            }
+            },
         ).flow
-
     }
 
     override fun getTvBrazilianDiscover(pagingConfig: PagingConfig): Flow<PagingData<Media>> {
@@ -27,9 +25,7 @@ class TvDiscoverRepositoryImpl(
             config = pagingConfig,
             pagingSourceFactory = {
                 remoteDataSource.getBrazilianPagingSource()
-            }
+            },
         ).flow
-
     }
-
 }

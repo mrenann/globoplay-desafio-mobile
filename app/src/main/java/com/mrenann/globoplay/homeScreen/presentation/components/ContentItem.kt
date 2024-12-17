@@ -24,26 +24,26 @@ fun ContentItem(
     onClick: (id: Int) -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .padding(3.dp)
-            .height(150.dp)
-            .clickable { onClick(id) }
+        modifier =
+            Modifier
+                .padding(3.dp)
+                .height(150.dp)
+                .clickable { onClick(id) },
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(posterUrl)
-                .crossfade(true)
-
-                .build(),
+            model =
+                ImageRequest.Builder(LocalContext.current)
+                    .data(posterUrl)
+                    .crossfade(true)
+                    .build(),
             contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(3.dp)),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(3.dp)),
             contentScale = ContentScale.FillHeight,
         )
     }
-
-
 }
 
 @Preview
@@ -51,6 +51,6 @@ fun ContentItem(
 fun ContentItemPreview() {
     ContentItem(
         id = 1,
-        posterUrl = ""
+        posterUrl = "",
     ) { }
 }

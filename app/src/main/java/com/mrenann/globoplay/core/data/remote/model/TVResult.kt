@@ -1,6 +1,5 @@
 package com.mrenann.globoplay.core.data.remote.model
 
-
 import com.google.gson.annotations.SerializedName
 
 data class TVResult(
@@ -11,5 +10,5 @@ data class TVResult(
     @SerializedName("origin_country")
     val originCountry: List<String> = listOf(),
     @SerializedName("original_name")
-    val originalName: String = ""
+    val originalName: String = "",
 ) : MediaResult()

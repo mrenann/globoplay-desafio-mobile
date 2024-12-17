@@ -9,17 +9,15 @@ import com.mrenann.globoplay.homeScreen.domain.source.MovieDiscoverRemoteDataSou
 import kotlinx.coroutines.flow.Flow
 
 class MovieDiscoverRepositoryImpl(
-    private val remoteDataSource: MovieDiscoverRemoteDataSource
+    private val remoteDataSource: MovieDiscoverRemoteDataSource,
 ) : MovieDiscoverRepository {
-
     override fun getMovieDiscover(pagingConfig: PagingConfig): Flow<PagingData<Media>> {
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = {
                 remoteDataSource.getPagingSource()
-            }
+            },
         ).flow
-
     }
 
     override fun getMovieBrazilianDiscover(pagingConfig: PagingConfig): Flow<PagingData<Media>> {
@@ -27,9 +25,7 @@ class MovieDiscoverRepositoryImpl(
             config = pagingConfig,
             pagingSourceFactory = {
                 remoteDataSource.getBrazilianPagingSource()
-            }
+            },
         ).flow
-
     }
-
 }

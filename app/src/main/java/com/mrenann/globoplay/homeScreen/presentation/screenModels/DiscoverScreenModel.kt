@@ -9,12 +9,13 @@ import com.mrenann.globoplay.homeScreen.presentation.state.DiscoverState
 
 class DiscoverScreenModel(
     getTvDiscoverUseCase: GetTvDiscoverUseCase,
-    getMovieDiscoverUseCase: GetMovieDiscoverUseCase
+    getMovieDiscoverUseCase: GetMovieDiscoverUseCase,
 ) : StateScreenModel<DiscoverScreenModel.State>(State.Init) {
-
     sealed class State {
         object Init : State()
+
         object Loading : State()
+
         data class Result(val state: DiscoverState) : State()
     }
 
@@ -27,13 +28,13 @@ class DiscoverScreenModel(
         val movies = getMovieDiscoverUseCase.invoke().cachedIn(screenModelScope)
         val brazilianMovies = getMovieDiscoverUseCase.invokeBrazilian().cachedIn(screenModelScope)
 
-        val state = DiscoverState(
-            tvSeries = series,
-            tvSeriesFromBrazil = brazilianSeries,
-            movies = movies,
-            moviesFromBrazil = brazilianMovies
-        )
+        val state =
+            DiscoverState(
+                tvSeries = series,
+                tvSeriesFromBrazil = brazilianSeries,
+                movies = movies,
+                moviesFromBrazil = brazilianMovies,
+            )
         mutableState.value = State.Result(state)
-
     }
 }

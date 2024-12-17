@@ -12,38 +12,40 @@ import java.util.concurrent.TimeUnit
 
 private const val TIMEOUT_SECONDS = 15L
 
-val networkModule = module {
+val networkModule =
+    module {
 
-    // Provide ParamsInterceptor
-    single { ParamsInterceptor() }
+        // Provide ParamsInterceptor
+        single { ParamsInterceptor() }
 
-    single {
-        HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
+        single {
+            HttpLoggingInterceptor().apply {
+                level =
+                    if (BuildConfig.DEBUG) {
+                        HttpLoggingInterceptor.Level.BODY
+                    } else {
+                        HttpLoggingInterceptor.Level.NONE
+                    }
             }
         }
-    }
 
-    single {
-        OkHttpClient.Builder()
-            .addInterceptor(get<ParamsInterceptor>()) // Inject ParamsInterceptor
-            .addInterceptor(get<HttpLoggingInterceptor>()) // Inject LoggingInterceptor
-            .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .build()
-    }
+        single {
+            OkHttpClient.Builder()
+                .addInterceptor(get<ParamsInterceptor>()) // Inject ParamsInterceptor
+                .addInterceptor(get<HttpLoggingInterceptor>()) // Inject LoggingInterceptor
+                .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .build()
+        }
 
-    single { GsonConverterFactory.create() }
+        single { GsonConverterFactory.create() }
 
-    single {
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL) // Use your BASE_URL from BuildConfig
-            .client(get<OkHttpClient>()) // Inject OkHttpClient
-            .addConverterFactory(get<GsonConverterFactory>()) // Inject GsonConverterFactory
-            .build()
-            .create(MediaService::class.java)
+        single {
+            Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL) // Use your BASE_URL from BuildConfig
+                .client(get<OkHttpClient>()) // Inject OkHttpClient
+                .addConverterFactory(get<GsonConverterFactory>()) // Inject GsonConverterFactory
+                .build()
+                .create(MediaService::class.java)
+        }
     }
-}

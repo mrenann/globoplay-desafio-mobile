@@ -1,9 +1,12 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
 }
 
 val apiPropertiesFile = rootProject.file("api.properties")
@@ -26,8 +29,6 @@ android {
         buildConfigField("String", "API_KEY", "${apiProperties["TMDB_KEY"]}")
         buildConfigField("String", "BASE_URL", "${apiProperties["TMDB_URL"]}")
         buildConfigField("String", "BASE_IMAGE_URL", "${apiProperties["TMDB_IMAGE_URL"]}")
-
-
     }
 
     buildTypes {
@@ -35,7 +36,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -49,7 +50,16 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+}
 
+ktlint {
+    android = true
+    ignoreFailures = false
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.SARIF)
+        reporter(ReporterType.CHECKSTYLE)
     }
 }
 
@@ -93,4 +103,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation(kotlin("test"))
 }

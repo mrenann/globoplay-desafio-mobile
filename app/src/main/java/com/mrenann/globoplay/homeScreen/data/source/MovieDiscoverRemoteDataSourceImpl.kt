@@ -12,9 +12,8 @@ import com.mrenann.globoplay.core.util.Constants.ORIGINCOUNTRY_VALUE
 import com.mrenann.globoplay.homeScreen.domain.source.MovieDiscoverRemoteDataSource
 
 class MovieDiscoverRemoteDataSourceImpl(
-    private val service: MediaService
+    private val service: MediaService,
 ) : MovieDiscoverRemoteDataSource {
-
     override fun getPagingSource(): MoviePagingSource {
         return MoviePagingSource(this)
     }
@@ -25,7 +24,7 @@ class MovieDiscoverRemoteDataSourceImpl(
 
     override suspend fun getDiscover(
         page: Int,
-        isFromBrazil: Boolean
+        isFromBrazil: Boolean,
     ): DiscoverMediaResponse<MovieResult> {
         val queryParams = mutableMapOf("page" to page.toString())
 
@@ -35,8 +34,7 @@ class MovieDiscoverRemoteDataSourceImpl(
         }
 
         return service.getDiscoverMovie(
-            queryParams = queryParams
+            queryParams = queryParams,
         )
     }
-
 }

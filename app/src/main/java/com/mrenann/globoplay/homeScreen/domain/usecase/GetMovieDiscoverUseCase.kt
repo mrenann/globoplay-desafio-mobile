@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetMovieDiscoverUseCase {
     operator fun invoke(): Flow<PagingData<Media>>
+
     fun invokeBrazilian(): Flow<PagingData<Media>>
 }

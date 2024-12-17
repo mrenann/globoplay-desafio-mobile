@@ -6,13 +6,12 @@ import com.mrenann.globoplay.core.paging.TvBrazilianPagingSource
 import com.mrenann.globoplay.core.paging.TvPagingSource
 
 interface TvDiscoverRemoteDataSource : DiscoverRemoteDataSource<TVResult> {
-
     override fun getPagingSource(): TvPagingSource
+
     override fun getBrazilianPagingSource(): TvBrazilianPagingSource
 
     override suspend fun getDiscover(
         page: Int,
-        isFromBrazil: Boolean
+        isFromBrazil: Boolean,
     ): DiscoverMediaResponse<TVResult>
-
 }

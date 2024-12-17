@@ -10,10 +10,8 @@ import com.mrenann.globoplay.homeScreen.domain.source.MovieDiscoverRemoteDataSou
 import java.io.IOException
 
 class MoviePagingSource(
-    private val remoteDataSource: MovieDiscoverRemoteDataSource
+    private val remoteDataSource: MovieDiscoverRemoteDataSource,
 ) : PagingSource<Int, Media>() {
-
-
     override fun getRefreshKey(state: PagingState<Int, Media>): Int? {
         return state.anchorPosition?.let { position ->
             val page = state.closestPageToPosition(position)
@@ -28,11 +26,10 @@ class MoviePagingSource(
                 remoteDataSource.getDiscover(page = page)
             val movies = response.results
 
-
             LoadResult.Page(
                 data = movies.toSerieFromMovie(),
                 prevKey = if (page == 1) null else page - 1,
-                nextKey = if (movies.isEmpty()) null else page + 1
+                nextKey = if (movies.isEmpty()) null else page + 1,
             )
         } catch (exception: IOException) {
             exception.printStackTrace()
@@ -46,6 +43,4 @@ class MoviePagingSource(
     companion object {
         private const val LIMIT_PAGE = 10
     }
-
-
 }

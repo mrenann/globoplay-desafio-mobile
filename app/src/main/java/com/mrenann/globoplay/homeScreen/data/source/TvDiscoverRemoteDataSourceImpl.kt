@@ -14,9 +14,8 @@ import com.mrenann.globoplay.core.util.Constants.WITHNETWORKS_VALUE
 import com.mrenann.globoplay.homeScreen.domain.source.TvDiscoverRemoteDataSource
 
 class TvDiscoverRemoteDataSourceImpl(
-    private val service: MediaService
+    private val service: MediaService,
 ) : TvDiscoverRemoteDataSource {
-
     override fun getPagingSource(): TvPagingSource {
         return TvPagingSource(this)
     }
@@ -27,7 +26,7 @@ class TvDiscoverRemoteDataSourceImpl(
 
     override suspend fun getDiscover(
         page: Int,
-        isFromBrazil: Boolean
+        isFromBrazil: Boolean,
     ): DiscoverMediaResponse<TVResult> {
         val queryParams = mutableMapOf("page" to page.toString())
 
@@ -38,8 +37,7 @@ class TvDiscoverRemoteDataSourceImpl(
         }
 
         return service.getDiscoverTv(
-            queryParams = queryParams
+            queryParams = queryParams,
         )
     }
-
 }

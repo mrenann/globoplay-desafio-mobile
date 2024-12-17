@@ -1,6 +1,5 @@
 package com.mrenann.globoplay.core.data.remote.model
 
-
 import com.google.gson.annotations.SerializedName
 
 data class MovieResult(
@@ -11,5 +10,5 @@ data class MovieResult(
     @SerializedName("title")
     val title: String = "",
     @SerializedName("video")
-    val video: Boolean = false
+    val video: Boolean = false,
 ) : MediaResult()

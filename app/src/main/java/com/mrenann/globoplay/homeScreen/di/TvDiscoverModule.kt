@@ -11,33 +11,31 @@ import com.mrenann.globoplay.homeScreen.domain.usecase.GetTvDiscoverUseCaseImpl
 import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel
 import org.koin.dsl.module
 
-val TvDiscoverModule = module {
+val TvDiscoverModule =
+    module {
 
-    single<TvDiscoverRemoteDataSource> {
-        TvDiscoverRemoteDataSourceImpl(
-            service = get<MediaService>()
-        )
+        single<TvDiscoverRemoteDataSource> {
+            TvDiscoverRemoteDataSourceImpl(
+                service = get<MediaService>(),
+            )
+        }
+
+        single<TvDiscoverRepository> {
+            TvDiscoverRepositoryImpl(
+                remoteDataSource = get<TvDiscoverRemoteDataSource>(),
+            )
+        }
+
+        single<GetTvDiscoverUseCase> {
+            GetTvDiscoverUseCaseImpl(
+                repository = get<TvDiscoverRepository>(),
+            )
+        }
+
+        factory {
+            DiscoverScreenModel(
+                getTvDiscoverUseCase = get<GetTvDiscoverUseCase>(),
+                getMovieDiscoverUseCase = get<GetMovieDiscoverUseCase>(),
+            )
+        }
     }
-
-
-    single<TvDiscoverRepository> {
-        TvDiscoverRepositoryImpl(
-            remoteDataSource = get<TvDiscoverRemoteDataSource>()
-        )
-    }
-
-    single<GetTvDiscoverUseCase> {
-        GetTvDiscoverUseCaseImpl(
-            repository = get<TvDiscoverRepository>()
-        )
-
-    }
-
-    factory {
-        DiscoverScreenModel(
-            getTvDiscoverUseCase = get<GetTvDiscoverUseCase>(),
-            getMovieDiscoverUseCase = get<GetMovieDiscoverUseCase>()
-        )
-    }
-
-}

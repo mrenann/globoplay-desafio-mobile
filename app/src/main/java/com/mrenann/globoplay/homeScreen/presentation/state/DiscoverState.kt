@@ -11,4 +11,3 @@ data class DiscoverState(
     val movies: Flow<PagingData<Media>> = emptyFlow(),
     val moviesFromBrazil: Flow<PagingData<Media>> = emptyFlow(),
 )
-

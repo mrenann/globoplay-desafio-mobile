@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieDiscoverRepository {
     fun getMovieDiscover(pagingConfig: PagingConfig): Flow<PagingData<Media>>
-    fun getMovieBrazilianDiscover(pagingConfig: PagingConfig): Flow<PagingData<Media>>
 
+    fun getMovieBrazilianDiscover(pagingConfig: PagingConfig): Flow<PagingData<Media>>
 }

@@ -7,16 +7,13 @@ import retrofit2.http.GET
 import retrofit2.http.QueryMap
 
 interface MediaService {
-
     @GET("discover/tv")
     suspend fun getDiscoverTv(
-        @QueryMap queryParams: Map<String, String>
+        @QueryMap queryParams: Map<String, String>,
     ): DiscoverMediaResponse<TVResult>
 
     @GET("discover/movie")
     suspend fun getDiscoverMovie(
-        @QueryMap queryParams: Map<String, String>
+        @QueryMap queryParams: Map<String, String>,
     ): DiscoverMediaResponse<MovieResult>
-
-
 }

@@ -1,6 +1,5 @@
 package com.mrenann.globoplay.core.data.remote.response
 
-
 import com.google.gson.annotations.SerializedName
 
 data class DiscoverMediaResponse<T>(
@@ -11,5 +10,5 @@ data class DiscoverMediaResponse<T>(
     @SerializedName("total_pages")
     val totalPages: Int = 0,
     @SerializedName("total_results")
-    val totalResults: Int = 0
+    val totalResults: Int = 0,
 )

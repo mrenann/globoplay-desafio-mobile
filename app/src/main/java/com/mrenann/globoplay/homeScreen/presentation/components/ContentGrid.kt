@@ -20,8 +20,7 @@ import com.mrenann.globoplay.core.domain.model.Media
 fun ContentGrid(
     title: String,
     pagingItems: LazyPagingItems<Media>,
-    paddingValues: PaddingValues,
-    onClick: (id: Int) -> Unit
+    onClick: (id: Int) -> Unit,
 ) {
     Column {
         Text(
@@ -29,12 +28,12 @@ fun ContentGrid(
             fontSize = 18.sp,
             text = title,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = Color.White,
         )
         LazyRow(
             contentPadding = PaddingValues(start = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier
+            modifier = Modifier,
         ) {
             items(pagingItems.itemCount) { index ->
                 val item = pagingItems[index]
@@ -42,12 +41,10 @@ fun ContentGrid(
                     ContentItem(
                         id = it.id,
                         posterUrl = it.posterPath,
-                        onClick = { id -> onClick(id) }
+                        onClick = { id -> onClick(id) },
                     )
-
                 }
             }
-
 
             pagingItems.apply {
                 when {
@@ -67,7 +64,6 @@ fun ContentGrid(
                         item {
                             Text("MAIS MAIS")
                         }
-
                     }
 
                     loadState.refresh is LoadState.Error -> {
@@ -80,7 +76,6 @@ fun ContentGrid(
                         item {
                             Text("ERROR")
                         }
-
                     }
                 }
             }

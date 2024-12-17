@@ -24,13 +24,12 @@ class MainActivity : ComponentActivity() {
                 modules(
                     networkModule,
                     MovieDiscoverModule,
-                    TvDiscoverModule
+                    TvDiscoverModule,
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
-
 
         setContent {
             Navigator(HomeScreen)
@@ -38,11 +37,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    GloboplayTheme {
-
+    GloboplayTheme { // asasdasdasd
     }
 }
