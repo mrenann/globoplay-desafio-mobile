@@ -14,7 +14,6 @@ okhttpBom = "4.12.0"
 koin-bom = "3.5.0"
 voyager = "1.1.0-beta02"
 lyricist = "1.7.0"
-ksp = "2.1.0-RC2-1.0.28"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,4 +58,4 @@ lyricist-processor = { module = "cafe.adriel.lyricist:lyricist-processor", versi
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
