@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - dev
-      - main  # Trigger when a PR is opened to the 'dev' or 'main' branch
+      - master  # Trigger when a PR is opened to the 'dev' or 'main' branch
   push:
     branches:
       - dev  # Trigger when a commit is pushed directly to the 'dev' branch
