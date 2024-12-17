@@ -45,6 +45,7 @@ import coil3.request.crossfade
 import coil3.request.error
 import coil3.request.placeholder
 import com.mrenann.globoplay.R
+import com.mrenann.globoplay.core.util.BASE_AVATAR_URL
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentGrid
 import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel
 import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel.State
@@ -116,7 +117,7 @@ object HomeScreen : Screen {
                                 IconButton(onClick = { /* do something */ }) {
                                     AsyncImage(
                                         model = ImageRequest.Builder(LocalContext.current)
-                                            .data("https://picsum.photos/200")
+                                            .data(BASE_AVATAR_URL)
                                             .crossfade(true)
                                             .placeholder(R.drawable.avatar)
                                             .error(R.drawable.avatar)
