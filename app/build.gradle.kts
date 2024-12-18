@@ -25,7 +25,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.mrenann.globoplay.InstrumentationTestRunner"
 
         buildConfigField("String", "API_KEY", "${apiProperties["TMDB_KEY"]}")
         buildConfigField("String", "BASE_URL", "${apiProperties["TMDB_URL"]}")
@@ -87,6 +87,9 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.koin.test.android)
 
     implementation(libs.voyager.navigator)
     implementation(libs.voyager.tabNavigator)
@@ -101,10 +104,18 @@ dependencies {
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.splashscreen)
-
     implementation(libs.composeIcons.evaIcons)
 
     ksp(libs.androidx.room.compiler)
+    implementation(libs.truth)
+    androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.truth)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.android)
+    testImplementation(libs.mockito.inline)
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
