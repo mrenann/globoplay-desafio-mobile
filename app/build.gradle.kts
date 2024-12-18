@@ -100,6 +100,7 @@ dependencies {
 
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.splashscreen)
 
     implementation(libs.composeIcons.evaIcons)
 
