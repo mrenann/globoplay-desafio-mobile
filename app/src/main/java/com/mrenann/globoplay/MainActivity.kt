@@ -14,6 +14,7 @@ import com.mrenann.globoplay.initialScreen.presentation.InitialScreen
 import com.mrenann.globoplay.mediaDetailsScreen.di.MovieDetailsModule
 import com.mrenann.globoplay.mediaDetailsScreen.di.TvDetailsModule
 import com.mrenann.globoplay.myListScreen.di.favoriteModule
+import com.mrenann.globoplay.searchScreen.di.searchModule
 import com.mrenann.globoplay.ui.theme.GloboplayTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -34,7 +35,8 @@ class MainActivity : ComponentActivity() {
                     MovieDetailsModule,
                     TvDetailsModule,
                     roomModule,
-                    favoriteModule
+                    favoriteModule,
+                    searchModule
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
