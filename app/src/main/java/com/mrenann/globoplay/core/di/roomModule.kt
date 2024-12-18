@@ -11,7 +11,6 @@ import org.koin.dsl.module
 val roomModule = module {
     single {
         Room.databaseBuilder(get(), ListDatabase::class.java, LIST_DATABASE_NAME)
-            .fallbackToDestructiveMigration()
             .build()
     }
 
