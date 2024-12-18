@@ -1,6 +1,8 @@
 package com.mrenann.globoplay.core.util
 
 object Constants {
+    const val LIST_DATABASE_NAME = "list_db"
+
     const val LANGUAGE_PARAM = "language"
     const val LANGUAGE_VALUE = "pt"
     const val API_KEY_PARAM = "api_key"
