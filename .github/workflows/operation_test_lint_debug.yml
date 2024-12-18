@@ -1,0 +1,19 @@
+name: On Pull Request Opened or Commit to Dev
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - master  # Trigger when a PR is opened to the 'dev' or 'main' branch
+  push:
+    branches:
+      - dev  # Trigger when a commit is pushed directly to the 'dev' branch
+
+jobs:
+  lint:
+    name: Lint Debug Variant
+    uses: ./.github/workflows/job_lint_debug.yml
+
+  test:
+    name: Test Debug Variant
+    uses: ./.github/workflows/job_test_debug.yml

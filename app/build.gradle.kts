@@ -1,9 +1,13 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ksp)
 }
 
 val apiPropertiesFile = rootProject.file("api.properties")
@@ -21,13 +25,11 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.mrenann.globoplay.InstrumentationTestRunner"
 
         buildConfigField("String", "API_KEY", "${apiProperties["TMDB_KEY"]}")
         buildConfigField("String", "BASE_URL", "${apiProperties["TMDB_URL"]}")
         buildConfigField("String", "BASE_IMAGE_URL", "${apiProperties["TMDB_IMAGE_URL"]}")
-
-
     }
 
     buildTypes {
@@ -35,7 +37,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -49,7 +51,16 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+}
 
+ktlint {
+    android = true
+    ignoreFailures = false
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.SARIF)
+        reporter(ReporterType.CHECKSTYLE)
     }
 }
 
@@ -63,6 +74,49 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    implementation(libs.code.gson)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.koin.test.android)
+
+    implementation(libs.voyager.navigator)
+    implementation(libs.voyager.tabNavigator)
+    implementation(libs.voyager.koin)
+
+    implementation(libs.androidx.paging.common.android)
+    implementation(libs.androidx.paging.compose.android)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    implementation(libs.androidx.room)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.splashscreen)
+    implementation(libs.composeIcons.evaIcons)
+
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.truth)
+    androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.truth)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.android)
+    testImplementation(libs.mockito.inline)
+
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -70,4 +124,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation(kotlin("test"))
 }
