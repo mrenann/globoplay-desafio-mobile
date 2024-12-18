@@ -42,7 +42,7 @@ fun TopBar(isScrolled: Boolean) {
             Image(
                 painter = painterResource(id = R.drawable.globoplay_logo),
                 contentDescription = "Globoplay Logo",
-                contentScale = ContentScale.Crop, // Adjust scaling
+                contentScale = ContentScale.FillWidth, // Adjust scaling
                 modifier = Modifier.fillMaxWidth(0.5F),
             )
         },

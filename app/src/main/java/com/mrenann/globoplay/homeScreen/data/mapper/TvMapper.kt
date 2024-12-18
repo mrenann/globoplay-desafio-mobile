@@ -13,6 +13,7 @@ fun List<TVResult>.toSerieFromTv() =
             overview = tv.overview,
             posterPath = tv.posterPath.toPosterUrl(),
             voteAverage = tv.voteAverage,
+            type = "tv"
         )
     }
 
@@ -24,5 +25,6 @@ fun List<MovieResult>.toSerieFromMovie() =
             overview = movie.overview,
             posterPath = movie.posterPath.toPosterUrl(),
             voteAverage = movie.voteAverage,
+            type = "movie"
         )
     }
