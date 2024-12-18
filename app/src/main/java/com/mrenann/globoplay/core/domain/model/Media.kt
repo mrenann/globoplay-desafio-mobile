@@ -6,5 +6,5 @@ data class Media(
     val overview: String,
     val posterPath: String,
     val voteAverage: Double,
-    val type: String = "movie",
+    val type: String,
 )

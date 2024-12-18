@@ -6,6 +6,7 @@ import com.mrenann.globoplay.core.data.remote.response.DiscoverMediaResponse
 import com.mrenann.globoplay.core.domain.model.MediaDetails
 import com.mrenann.globoplay.core.paging.TvSimilarPagingSource
 import com.mrenann.globoplay.core.util.toBackdropUrl
+import com.mrenann.globoplay.core.util.toPosterUrl
 import com.mrenann.globoplay.mediaDetailsScreen.domain.source.TvDetailsRemoteDataSource
 
 class TvDetailsRemoteDataSourceImpl(
@@ -20,10 +21,12 @@ class TvDetailsRemoteDataSourceImpl(
             genres = genres,
             overview = response.overview,
             backdropPath = response.backdropPath?.toBackdropUrl(),
+            posterPath = response.posterPath?.toPosterUrl(),
             releaseDate = response.firstAirDate,
             originalTitle = response.originalName,
             countries = response.originCountry,
             duration = 0,
+            type = "tv"
         )
     }
 

@@ -1,6 +1,7 @@
 package com.mrenann.globoplay.mediaDetailsScreen.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -21,7 +22,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -51,9 +51,15 @@ import com.mrenann.globoplay.core.domain.model.Media
 import com.mrenann.globoplay.core.domain.model.MediaDetails
 import com.mrenann.globoplay.core.util.formatTime
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentItem
+import com.mrenann.globoplay.mediaDetailsScreen.data.mapper.toMedia
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.DetailsScreen
 import com.mrenann.globoplay.ui.theme.Background
 import com.mrenann.globoplay.ui.theme.GenreBackground
+import compose.icons.EvaIcons
+import compose.icons.evaicons.Fill
+import compose.icons.evaicons.Outline
+import compose.icons.evaicons.fill.Bookmark
+import compose.icons.evaicons.outline.Bookmark
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -62,7 +68,7 @@ fun MovieContent(
     pagingMoviesSimilar: LazyPagingItems<Media>,
     isLoading: Boolean,
     isError: String,
-    iconColor: Color,
+    checked: Boolean,
     modifier: Modifier = Modifier,
     onAddToList: (Media) -> Unit
 ) {
@@ -188,13 +194,16 @@ fun MovieContent(
                                         shape = RoundedCornerShape(8.dp)
                                     )
                                     .height(48.dp)
-                                    .width(48.dp),
+                                    .width(48.dp)
+                                    .clickable {
+                                        movie?.toMedia(type = movie.type)?.let { onAddToList(it) }
+                                    },
                                 horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center // Center the content vertically inside the column
+                                verticalArrangement = Arrangement.Center
                             ) {
                                 Icon(
                                     tint = Color.White,
-                                    imageVector = Icons.Filled.Share,
+                                    imageVector = if (checked) EvaIcons.Fill.Bookmark else EvaIcons.Outline.Bookmark,
                                     contentDescription = "Localized description"
                                 )
                             }
