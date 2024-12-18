@@ -5,10 +5,10 @@ import com.mrenann.globoplay.myListScreen.domain.repository.MovieFavoriteReposit
 import kotlinx.coroutines.flow.Flow
 
 class GetMoviesFavoriteUseCaseImpl(
-    private val movieFavoriteRepository: MovieFavoriteRepository
+    private val repository: MovieFavoriteRepository
 ) : GetMoviesFavoriteUseCase {
-    override suspend fun invoke(): Flow<List<Media>> {
-        return movieFavoriteRepository.getMovies()
+    override fun invoke(): Flow<List<Media>> {
+        return repository.getMovies()
     }
 
 }

@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,23 +18,40 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.paging.compose.collectAsLazyPagingItems
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
-import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentGrid
 import com.mrenann.globoplay.homeScreen.presentation.components.TopBar
 import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel
 import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel.State
+import com.mrenann.globoplay.initialScreen.presentation.LocalNavigatorParent
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.DetailsScreen
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.screenModels.DetailsScreenModel
 import com.mrenann.globoplay.ui.theme.Background
 
-object HomeScreen : Screen {
+object HomeScreen : Tab {
+    override val options: TabOptions
+        @Composable
+        get() {
+            val title = "Inicio"
+            val icon = rememberVectorPainter(Icons.Default.Home)
+
+            return remember {
+                TabOptions(
+                    index = 0u,
+                    title = title,
+                    icon = icon
+                )
+            }
+        }
+
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
+        val navigator = LocalNavigatorParent.currentOrThrow
         val listState = rememberLazyListState()
         val isScrolled by remember {
             derivedStateOf { listState.firstVisibleItemIndex > 1 || listState.firstVisibleItemScrollOffset > 1 }

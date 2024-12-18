@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.ksp)
 }
 
 val apiPropertiesFile = rootProject.file("api.properties")
@@ -88,6 +89,7 @@ dependencies {
     implementation(libs.koin.compose)
 
     implementation(libs.voyager.navigator)
+    implementation(libs.voyager.tabNavigator)
     implementation(libs.voyager.koin)
 
     implementation(libs.androidx.paging.common.android)
@@ -97,6 +99,9 @@ dependencies {
     implementation(libs.coil.network.okhttp)
 
     implementation(libs.androidx.room)
+    implementation(libs.androidx.room.ktx)
+
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

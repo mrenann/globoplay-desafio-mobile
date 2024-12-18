@@ -4,5 +4,5 @@ import com.mrenann.globoplay.core.domain.model.Media
 import kotlinx.coroutines.flow.Flow
 
 interface GetMoviesFavoriteUseCase {
-    suspend operator fun invoke(): Flow<List<Media>>
+    operator fun invoke(): Flow<List<Media>>
 }

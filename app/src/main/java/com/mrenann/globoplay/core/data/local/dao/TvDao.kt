@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TvDao {
-    @Query("SELECT * FROM Movies")
+    @Query("SELECT * FROM Series")
     fun getSeries(): Flow<List<TvEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
