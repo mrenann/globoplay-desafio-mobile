@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.mrenann.globoplay.core.domain.model.Media
+import com.mrenann.globoplay.core.presentation.components.ErrorView
+import com.mrenann.globoplay.core.presentation.components.LoadingView
 
 @Composable
 fun ContentGrid(
@@ -50,31 +52,41 @@ fun ContentGrid(
                 when {
                     loadState.refresh is LoadState.Loading -> {
                         item {
-                            Text("CARREGANDO")
+                            LoadingView()
                         }
                     }
 
                     loadState.prepend is LoadState.Loading -> {
                         item {
-                            Text("MAIS xzx")
+                            LoadingView()
                         }
                     }
 
                     loadState.append is LoadState.Loading -> {
                         item {
-                            Text("MAIS MAIS")
+                            LoadingView()
                         }
                     }
 
                     loadState.refresh is LoadState.Error -> {
                         item {
-                            Text("ERROR")
+                            ErrorView(
+                                modifier = Modifier.padding(10.dp),
+                                message = "Tente Novamente"
+                            ) {
+                                retry()
+                            }
                         }
                     }
 
                     loadState.append is LoadState.Error -> {
                         item {
-                            Text("ERROR")
+                            ErrorView(
+                                modifier = Modifier.padding(10.dp),
+                                message = "Tente Novamente"
+                            ) {
+                                retry()
+                            }
                         }
                     }
                 }

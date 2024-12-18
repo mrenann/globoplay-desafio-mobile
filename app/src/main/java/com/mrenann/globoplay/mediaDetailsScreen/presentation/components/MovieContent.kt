@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -44,11 +45,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mrenann.globoplay.core.domain.model.Media
 import com.mrenann.globoplay.core.domain.model.MediaDetails
+import com.mrenann.globoplay.core.presentation.components.ErrorView
+import com.mrenann.globoplay.core.presentation.components.LoadingView
 import com.mrenann.globoplay.core.util.formatTime
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentItem
 import com.mrenann.globoplay.mediaDetailsScreen.data.mapper.toMedia
@@ -140,7 +144,7 @@ fun MovieContent(
 
                     item {
                         Text(
-                            text = movie?.releaseDate?.substring(0, 4) ?: "",
+                            text = movie?.releaseDate?.substring(0, 4) ?: "Sem data de lançamento",
                             modifier = Modifier
                                 .padding(horizontal = 12.dp)
                                 .padding(top = 12.dp),
@@ -150,7 +154,7 @@ fun MovieContent(
 
                     item {
                         Overview(
-                            overview = movie?.overview ?: "",
+                            overview = movie?.overview ?: "Sem Descrição",
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
                         )
                     }
@@ -159,7 +163,7 @@ fun MovieContent(
                         Row(
                             modifier = Modifier.padding(horizontal = 12.dp),
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically // Align the row items vertically in the center
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(
                                 modifier = Modifier
@@ -177,7 +181,7 @@ fun MovieContent(
                                     .height(48.dp)
                                     .weight(1F),
                                 horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center // Center the content vertically inside the column
+                                verticalArrangement = Arrangement.Center
                             ) {
                                 Text(
                                     text = "Assista agora",
@@ -281,6 +285,50 @@ fun MovieContent(
                                                 )
                                             }
                                         )
+                                    }
+                                }
+
+                                pagingMoviesSimilar.apply {
+                                    when {
+                                        loadState.refresh is LoadState.Loading -> {
+                                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                                LoadingView()
+                                            }
+                                        }
+
+                                        loadState.prepend is LoadState.Loading -> {
+                                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                                LoadingView()
+                                            }
+                                        }
+
+                                        loadState.append is LoadState.Loading -> {
+                                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                                LoadingView()
+                                            }
+                                        }
+
+                                        loadState.refresh is LoadState.Error -> {
+                                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                                ErrorView(
+                                                    modifier = Modifier.padding(10.dp),
+                                                    message = "Tente Novamente"
+                                                ) {
+                                                    retry()
+                                                }
+                                            }
+                                        }
+
+                                        loadState.append is LoadState.Error -> {
+                                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                                ErrorView(
+                                                    modifier = Modifier.padding(10.dp),
+                                                    message = "Tente Novamente"
+                                                ) {
+                                                    retry()
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

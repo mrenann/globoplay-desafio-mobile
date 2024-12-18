@@ -15,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import coil3.request.placeholder
+import com.mrenann.globoplay.R
 import com.mrenann.globoplay.ui.theme.Background
 
 @Composable
@@ -28,6 +30,7 @@ fun BackdropImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(backdropUrl)
                 .crossfade(true)
+                .placeholder(R.drawable.globo)
                 .build(),
             contentDescription = "",
             contentScale = ContentScale.Crop,
