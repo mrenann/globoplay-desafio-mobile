@@ -48,7 +48,7 @@ import androidx.paging.compose.LazyPagingItems
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mrenann.globoplay.core.domain.model.Media
-import com.mrenann.globoplay.core.domain.model.MovieDetails
+import com.mrenann.globoplay.core.domain.model.MediaDetails
 import com.mrenann.globoplay.core.util.formatTime
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentItem
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.DetailsScreen
@@ -58,7 +58,7 @@ import com.mrenann.globoplay.ui.theme.GenreBackground
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun MovieContent(
-    movie: MovieDetails?,
+    movie: MediaDetails?,
     pagingMoviesSimilar: LazyPagingItems<Media>,
     isLoading: Boolean,
     isError: String,
@@ -266,7 +266,8 @@ fun MovieContent(
                                             onClick = {
                                                 navigator.push(
                                                     DetailsScreen(
-                                                        movieId = movieElement.id
+                                                        tvId = if (movieElement.type == "tv") movieElement.id else null,
+                                                        movieId = if (movieElement.type == "movie") movieElement.id else null,
                                                     )
                                                 )
                                             }

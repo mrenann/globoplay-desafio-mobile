@@ -1,6 +1,6 @@
 package com.mrenann.globoplay.core.domain.model
 
-data class MovieDetails(
+data class MediaDetails(
     val id: Int,
     val title: String,
     val genres: List<String>,

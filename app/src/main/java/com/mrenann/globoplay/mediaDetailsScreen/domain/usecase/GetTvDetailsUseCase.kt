@@ -6,8 +6,8 @@ import com.mrenann.globoplay.core.domain.model.MediaDetails
 import com.mrenann.globoplay.core.util.ResultData
 import kotlinx.coroutines.flow.Flow
 
-interface GetMovieDetailsUseCase {
+interface GetTvDetailsUseCase {
     operator fun invoke(params: Params): Flow<ResultData<Pair<Flow<PagingData<Media>>, MediaDetails>>>
-    data class Params(val movieId: Int)
+    data class Params(val tvId: Int)
 
 }

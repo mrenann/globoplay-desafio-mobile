@@ -91,7 +91,7 @@ object HomeScreen : Screen {
                                     onClick = { id ->
                                         navigator.push(
                                             DetailsScreen(
-                                                movieId = id,
+                                                tvId = id,
                                             )
                                         )
                                     },
@@ -102,7 +102,7 @@ object HomeScreen : Screen {
                                     onClick = { id ->
                                         navigator.push(
                                             DetailsScreen(
-                                                movieId = id,
+                                                tvId = id,
                                             )
                                         )
                                     },

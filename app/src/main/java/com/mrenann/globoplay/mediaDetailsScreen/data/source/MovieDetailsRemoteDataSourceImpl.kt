@@ -3,7 +3,7 @@ package com.mrenann.globoplay.mediaDetailsScreen.data.source
 import com.mrenann.globoplay.core.data.remote.MediaService
 import com.mrenann.globoplay.core.data.remote.model.MovieResult
 import com.mrenann.globoplay.core.data.remote.response.DiscoverMediaResponse
-import com.mrenann.globoplay.core.domain.model.MovieDetails
+import com.mrenann.globoplay.core.domain.model.MediaDetails
 import com.mrenann.globoplay.core.paging.MovieSimilarPagingSource
 import com.mrenann.globoplay.core.util.toBackdropUrl
 import com.mrenann.globoplay.mediaDetailsScreen.domain.source.MovieDetailsRemoteDataSource
@@ -11,15 +11,15 @@ import com.mrenann.globoplay.mediaDetailsScreen.domain.source.MovieDetailsRemote
 class MovieDetailsRemoteDataSourceImpl(
     private val service: MediaService
 ) : MovieDetailsRemoteDataSource {
-    override suspend fun getMovieDetails(id: Int): MovieDetails {
+    override suspend fun getMovieDetails(id: Int): MediaDetails {
         val response = service.getMovie(id)
         val genres = response.genres.map { genre -> genre.name }
-        return MovieDetails(
+        return MediaDetails(
             id = response.id,
             title = response.title,
             genres = genres,
             overview = response.overview,
-            backdropPath = (response.backdropPath.ifEmpty { response.posterPath }).toBackdropUrl(),
+            backdropPath = response.backdropPath.toBackdropUrl(),
             releaseDate = response.releaseDate,
             originalTitle = response.originalTitle,
             countries = response.originCountry,

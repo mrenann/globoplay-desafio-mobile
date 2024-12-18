@@ -18,7 +18,8 @@ import com.mrenann.globoplay.mediaDetailsScreen.presentation.screenModels.Detail
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.state.MovieDetailsEvent
 
 data class DetailsScreen(
-    val movieId: Int?
+    val movieId: Int? = null,
+    val tvId: Int? = null
 ) : Screen {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
@@ -28,10 +29,15 @@ data class DetailsScreen(
         val state by screenModel.state.collectAsState()
 
         LaunchedEffect(
-            key1 = movieId
+            key1 = movieId,
+            key2 = tvId
         ) {
             if (movieId != null) {
                 screenModel.getMovieDetails(MovieDetailsEvent.GetMovieDetails(movieId))
+            }
+
+            if (tvId != null) {
+                screenModel.getTvDetails(MovieDetailsEvent.GetTvDetails(tvId))
             }
         }
 

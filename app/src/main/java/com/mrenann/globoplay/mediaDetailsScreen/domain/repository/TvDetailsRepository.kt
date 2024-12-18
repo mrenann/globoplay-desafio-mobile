@@ -6,9 +6,9 @@ import com.mrenann.globoplay.core.domain.model.Media
 import com.mrenann.globoplay.core.domain.model.MediaDetails
 import kotlinx.coroutines.flow.Flow
 
-interface MovieDetailsRepository {
+interface TvDetailsRepository {
 
-    suspend fun getMovieDetails(id: Int): MediaDetails
-    suspend fun getMoviesSimilar(id: Int, pagingConfig: PagingConfig): Flow<PagingData<Media>>
+    suspend fun getTvDetails(id: Int): MediaDetails
+    suspend fun getTvSeriesSimilar(id: Int, pagingConfig: PagingConfig): Flow<PagingData<Media>>
 
 }

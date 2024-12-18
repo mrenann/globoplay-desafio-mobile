@@ -1,9 +1,9 @@
 package com.mrenann.globoplay.mediaDetailsScreen.data.mapper
 
 import com.mrenann.globoplay.core.domain.model.Media
-import com.mrenann.globoplay.core.domain.model.MovieDetails
+import com.mrenann.globoplay.core.domain.model.MediaDetails
 
-fun MovieDetails.toMedia(): Media =
+fun MediaDetails.toMedia(): Media =
     Media(
         id = id,
         name = title,
