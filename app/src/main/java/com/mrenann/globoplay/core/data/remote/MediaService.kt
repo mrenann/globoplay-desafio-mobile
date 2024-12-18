@@ -4,6 +4,7 @@ import com.mrenann.globoplay.core.data.remote.model.MovieResult
 import com.mrenann.globoplay.core.data.remote.model.TVResult
 import com.mrenann.globoplay.core.data.remote.response.DiscoverMediaResponse
 import com.mrenann.globoplay.core.data.remote.response.MovieDetailsResponse
+import com.mrenann.globoplay.core.data.remote.response.SearchResponse
 import com.mrenann.globoplay.core.data.remote.response.TvDetailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,6 +21,12 @@ interface MediaService {
     suspend fun getDiscoverMovie(
         @QueryMap queryParams: Map<String, String>,
     ): DiscoverMediaResponse<MovieResult>
+
+    @GET("search/{movie_id}")
+    suspend fun search(
+        @Query("page") page: Int,
+        @Query("query") query: String
+    ): SearchResponse
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(
