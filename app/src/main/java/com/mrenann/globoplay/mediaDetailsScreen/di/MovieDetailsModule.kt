@@ -9,6 +9,9 @@ import com.mrenann.globoplay.mediaDetailsScreen.domain.usecase.GetMovieDetailsUs
 import com.mrenann.globoplay.mediaDetailsScreen.domain.usecase.GetMovieDetailsUseCaseImpl
 import com.mrenann.globoplay.mediaDetailsScreen.domain.usecase.GetTvDetailsUseCase
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.screenModels.DetailsScreenModel
+import com.mrenann.globoplay.myListScreen.domain.usecase.AddMovieFavoriteUseCase
+import com.mrenann.globoplay.myListScreen.domain.usecase.DeleteMovieFavoriteUseCase
+import com.mrenann.globoplay.myListScreen.domain.usecase.InListMovieFavoriteUseCase
 import org.koin.dsl.module
 
 val MovieDetailsModule =
@@ -36,6 +39,9 @@ val MovieDetailsModule =
             DetailsScreenModel(
                 getMovieDetailsUseCase = get<GetMovieDetailsUseCase>(),
                 getTvDetailsUseCase = get<GetTvDetailsUseCase>(),
+                addMovieFavoriteUseCase = get<AddMovieFavoriteUseCase>(),
+                removeMovieFavoriteUseCase = get<DeleteMovieFavoriteUseCase>(),
+                inListMovieUseCase = get<InListMovieFavoriteUseCase>(),
             )
         }
 

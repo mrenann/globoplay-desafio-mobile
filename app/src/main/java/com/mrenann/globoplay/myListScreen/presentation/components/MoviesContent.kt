@@ -11,14 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mrenann.globoplay.core.domain.model.Media
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentItem
+import com.mrenann.globoplay.initialScreen.presentation.LocalNavigatorParent
+import com.mrenann.globoplay.mediaDetailsScreen.presentation.DetailsScreen
 
 @Composable
 fun MoviesContent(
     pagingMovies: List<Media>,
     modifier: Modifier = Modifier
 ) {
+    val navigator = LocalNavigatorParent.currentOrThrow
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -32,11 +37,11 @@ fun MoviesContent(
         ) {
             items(pagingMovies.size) { index ->
                 val movie = pagingMovies[index]
-                movie.let {
+                movie.let { movie ->
                     ContentItem(
-                        id = it.id,
-                        posterUrl = it.posterPath,
-                        onClick = {}
+                        id = movie.id,
+                        posterUrl = movie.posterPath,
+                        onClick = { navigator.push(DetailsScreen(movieId = movie.id)) }
                     )
                 }
             }

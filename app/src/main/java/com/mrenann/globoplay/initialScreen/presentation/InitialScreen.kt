@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -20,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -93,11 +90,8 @@ object InitialScreen : Screen {
     @Composable
     private fun BottomNavigationBar(tabs: List<Tab>) {
 
-        val containerColor = MaterialTheme.colorScheme.primaryContainer
-
         NavigationBar(
-            modifier = Modifier.clip(RoundedCornerShape(20.dp, 20.dp)),
-            containerColor = containerColor
+            containerColor = Color.Black
         ) {
             val tabNavigator = LocalTabNavigator.current
             tabs.forEachIndexed { index, tab ->
@@ -117,8 +111,8 @@ object InitialScreen : Screen {
         selected: Boolean,
         onClick: () -> Unit
     ) {
-        val selectedColor = MaterialTheme.colorScheme.primary
-        val unselectedColor = MaterialTheme.colorScheme.onSurface
+        val selectedColor = Color.White
+        val unselectedColor = Color.DarkGray
 
         NavigationBarItem(
             selected = selected,

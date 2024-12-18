@@ -8,7 +8,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.paging.compose.collectAsLazyPagingItems
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
@@ -34,6 +33,7 @@ data class DetailsScreen(
         ) {
             if (movieId != null) {
                 screenModel.getMovieDetails(MovieDetailsEvent.GetMovieDetails(movieId))
+                screenModel.checkedFavorite(MovieDetailsEvent.CheckedFavorite(movieId))
             }
 
             if (tvId != null) {
@@ -56,16 +56,19 @@ data class DetailsScreen(
                         val movie = (state as State.Result).state.movie
                         val results =
                             (state as State.Result).state.results.collectAsLazyPagingItems()
+                        val checked = (state as State.Result).state.checked
 
                         MovieContent(
                             movie = movie,
                             pagingMoviesSimilar = results,
                             isLoading = false,
                             isError = "",
-                            iconColor = Color.Black,
+                            checked = checked,
                             modifier = Modifier,
-
-                            ) { }
+                            onAddToList = { movie ->
+                                screenModel.favorite(movie)
+                            }
+                        )
                     }
                 }
             }

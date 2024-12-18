@@ -5,6 +5,7 @@ data class MediaDetails(
     val title: String,
     val genres: List<String>,
     val overview: String?,
+    val posterPath: String?,
     val backdropPath: String?,
     val releaseDate: String?,
     val originalTitle: String,

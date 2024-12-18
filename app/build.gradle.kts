@@ -101,6 +101,8 @@ dependencies {
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.ktx)
 
+    implementation(libs.composeIcons.evaIcons)
+
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)

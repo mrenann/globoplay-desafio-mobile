@@ -4,6 +4,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.mrenann.globoplay.myListScreen.domain.usecase.GetMoviesFavoriteUseCase
 import com.mrenann.globoplay.myListScreen.presentation.state.FavoriteState
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MovieFavoriteScreenModel(
@@ -24,7 +25,13 @@ class MovieFavoriteScreenModel(
 
     private fun fetch() {
         screenModelScope.launch {
-
+            getMoviesFavoriteUseCase.invoke().collectLatest { movies ->
+                mutableState.value = State.Result(
+                    state = FavoriteState(
+                        movies = movies
+                    )
+                )
+            }
         }
     }
 

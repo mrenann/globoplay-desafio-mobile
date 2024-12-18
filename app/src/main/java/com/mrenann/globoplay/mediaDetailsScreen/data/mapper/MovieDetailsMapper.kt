@@ -8,6 +8,6 @@ fun MediaDetails.toMedia(): Media =
         id = id,
         name = title,
         overview = overview ?: "",
-        posterPath = backdropPath.toString(),
+        posterPath = posterPath.toString(),
         voteAverage = 0.0
     )
