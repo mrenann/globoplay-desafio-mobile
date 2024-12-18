@@ -19,20 +19,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.paging.compose.collectAsLazyPagingItems
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentGrid
 import com.mrenann.globoplay.homeScreen.presentation.components.TopBar
 import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel
 import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel.State
+import com.mrenann.globoplay.mediaDetailsScreen.presentation.DetailsScreen
+import com.mrenann.globoplay.mediaDetailsScreen.presentation.screenModels.DetailsScreenModel
 import com.mrenann.globoplay.ui.theme.Background
 
 object HomeScreen : Screen {
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val listState = rememberLazyListState()
         val isScrolled by remember {
             derivedStateOf { listState.firstVisibleItemIndex > 1 || listState.firstVisibleItemScrollOffset > 1 }
         }
         val screenModel = koinScreenModel<DiscoverScreenModel>()
+        val screenModelDetails = koinScreenModel<DetailsScreenModel>()
         val state by screenModel.state.collectAsState()
 
         Box(
@@ -78,26 +84,50 @@ object HomeScreen : Screen {
                                     (state as State.Result).state.movies.collectAsLazyPagingItems()
                                 val moviesBr =
                                     (state as State.Result).state.moviesFromBrazil.collectAsLazyPagingItems()
-
+                                val getMovieDetails = screenModelDetails::getMovieDetails
                                 ContentGrid(
                                     title = "Séries",
                                     pagingItems = series,
-                                    onClick = { id -> println(id) },
+                                    onClick = { id ->
+                                        navigator.push(
+                                            DetailsScreen(
+                                                movieId = id,
+                                            )
+                                        )
+                                    },
                                 )
                                 ContentGrid(
                                     title = "Séries do Brasil",
                                     pagingItems = seriesBr,
-                                    onClick = { id -> println(id) },
+                                    onClick = { id ->
+                                        navigator.push(
+                                            DetailsScreen(
+                                                movieId = id,
+                                            )
+                                        )
+                                    },
                                 )
                                 ContentGrid(
                                     title = "Filmes",
                                     pagingItems = movies,
-                                    onClick = { id -> println(id) },
+                                    onClick = { id ->
+                                        navigator.push(
+                                            DetailsScreen(
+                                                movieId = id,
+                                            )
+                                        )
+                                    },
                                 )
                                 ContentGrid(
                                     title = "Filmes do Brasil",
                                     pagingItems = moviesBr,
-                                    onClick = { id -> println(id) },
+                                    onClick = { id ->
+                                        navigator.push(
+                                            DetailsScreen(
+                                                movieId = id,
+                                            )
+                                        )
+                                    },
                                 )
                             }
                         }

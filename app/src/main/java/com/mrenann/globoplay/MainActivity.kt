@@ -11,6 +11,7 @@ import com.mrenann.globoplay.core.di.networkModule
 import com.mrenann.globoplay.homeScreen.di.MovieDiscoverModule
 import com.mrenann.globoplay.homeScreen.di.TvDiscoverModule
 import com.mrenann.globoplay.homeScreen.presentation.HomeScreen
+import com.mrenann.globoplay.mediaDetailsScreen.di.MovieDetailsModule
 import com.mrenann.globoplay.ui.theme.GloboplayTheme
 import org.koin.core.context.startKoin
 
@@ -25,6 +26,7 @@ class MainActivity : ComponentActivity() {
                     networkModule,
                     MovieDiscoverModule,
                     TvDiscoverModule,
+                    MovieDetailsModule
                 )
             } catch (e: Exception) {
                 e.printStackTrace()

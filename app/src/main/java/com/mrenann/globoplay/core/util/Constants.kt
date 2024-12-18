@@ -2,7 +2,7 @@ package com.mrenann.globoplay.core.util
 
 object Constants {
     const val LANGUAGE_PARAM = "language"
-    const val LANGUAGE_VALUE = "pt_BR"
+    const val LANGUAGE_VALUE = "pt"
     const val API_KEY_PARAM = "api_key"
     const val WATCH_REGION_PARAM = "watch_region"
     const val WATCH_REGION_VALUE = "BR"

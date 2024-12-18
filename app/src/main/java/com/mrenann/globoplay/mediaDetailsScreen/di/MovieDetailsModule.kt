@@ -7,6 +7,7 @@ import com.mrenann.globoplay.mediaDetailsScreen.domain.repository.MovieDetailsRe
 import com.mrenann.globoplay.mediaDetailsScreen.domain.source.MovieDetailsRemoteDataSource
 import com.mrenann.globoplay.mediaDetailsScreen.domain.usecase.GetMovieDetailsUseCase
 import com.mrenann.globoplay.mediaDetailsScreen.domain.usecase.GetMovieDetailsUseCaseImpl
+import com.mrenann.globoplay.mediaDetailsScreen.presentation.screenModels.DetailsScreenModel
 import org.koin.dsl.module
 
 val MovieDetailsModule =
@@ -27,6 +28,12 @@ val MovieDetailsModule =
         single<GetMovieDetailsUseCase> {
             GetMovieDetailsUseCaseImpl(
                 repository = get<MovieDetailsRepository>(),
+            )
+        }
+
+        factory {
+            DetailsScreenModel(
+                getMovieDetailsUseCase = get<GetMovieDetailsUseCase>(),
             )
         }
 

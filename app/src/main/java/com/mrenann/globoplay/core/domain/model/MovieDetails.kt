@@ -7,7 +7,8 @@ data class MovieDetails(
     val overview: String?,
     val backdropPath: String?,
     val releaseDate: String?,
-    val voteAverage: Double,
+    val originalTitle: String,
     val duration: Int = 0,
-    val voteCount: Int = 0,
+    val countries: List<String> = emptyList()
+
 )

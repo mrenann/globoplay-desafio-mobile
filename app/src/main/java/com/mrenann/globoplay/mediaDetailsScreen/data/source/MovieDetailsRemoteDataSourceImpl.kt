@@ -19,11 +19,11 @@ class MovieDetailsRemoteDataSourceImpl(
             title = response.title,
             genres = genres,
             overview = response.overview,
-            backdropPath = response.backdropPath.toBackdropUrl(),
+            backdropPath = (response.backdropPath.ifEmpty { response.posterPath }).toBackdropUrl(),
             releaseDate = response.releaseDate,
-            voteAverage = response.voteAverage,
+            originalTitle = response.originalTitle,
+            countries = response.originCountry,
             duration = response.runtime,
-            voteCount = response.voteCount
         )
     }
 
