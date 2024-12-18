@@ -22,7 +22,7 @@ interface MediaService {
         @QueryMap queryParams: Map<String, String>,
     ): DiscoverMediaResponse<MovieResult>
 
-    @GET("search/{movie_id}")
+    @GET("search/multi")
     suspend fun search(
         @Query("page") page: Int,
         @Query("query") query: String

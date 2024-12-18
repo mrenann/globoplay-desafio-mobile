@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import cafe.adriel.voyager.navigator.Navigator
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -30,10 +31,11 @@ import coil3.request.error
 import coil3.request.placeholder
 import com.mrenann.globoplay.R
 import com.mrenann.globoplay.core.util.BASE_AVATAR_URL
+import com.mrenann.globoplay.searchScreen.presentation.SearchScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(isScrolled: Boolean) {
+fun TopBar(isScrolled: Boolean, navigator: Navigator) {
     val appBarBackgroundColor = if (isScrolled) Color.Black else Color.Transparent
     val textAppBarColor = if (isScrolled) Color.White else Color.Black
 
@@ -65,7 +67,9 @@ fun TopBar(isScrolled: Boolean) {
                         contentDescription = "Localized description",
                     )
                 }
-                IconButton(onClick = { /* do something */ }) {
+                IconButton(onClick = {
+                    navigator.push(SearchScreen)
+                }) {
                     Icon(
                         tint = Color.White,
                         imageVector = Icons.Filled.Search,

@@ -71,7 +71,7 @@ object HomeScreen : Tab {
                         .fillMaxSize()
                         .background(Color.Red),
                 topBar = {
-                    TopBar(isScrolled)
+                    TopBar(isScrolled, navigator)
                 },
             ) { innerPadding ->
                 LazyColumn(
