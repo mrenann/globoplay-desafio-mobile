@@ -12,7 +12,7 @@ class AddMovieFavoriteUseCaseImpl(
 ) : AddMovieFavoriteUseCase {
     override suspend fun invoke(params: AddMovieFavoriteUseCase.Params): Flow<ResultData<Unit>> {
         return flow {
-            val insert = movieFavoriteRepository.insertMovie(params.media)
+            val insert = movieFavoriteRepository.insertMovie(params.media, params.type)
             emit(ResultData.Success(insert))
         }.flowOn(Dispatchers.IO)
     }

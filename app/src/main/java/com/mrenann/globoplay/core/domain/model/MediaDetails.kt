@@ -10,6 +10,7 @@ data class MediaDetails(
     val releaseDate: String?,
     val originalTitle: String,
     val duration: Int = 0,
+    val type: String,
     val countries: List<String> = emptyList()
 
 )

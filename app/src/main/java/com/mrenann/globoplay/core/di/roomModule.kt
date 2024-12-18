@@ -7,9 +7,11 @@ import com.mrenann.globoplay.core.data.local.databases.ListDatabase
 import com.mrenann.globoplay.core.util.Constants.LIST_DATABASE_NAME
 import org.koin.dsl.module
 
+
 val roomModule = module {
     single {
         Room.databaseBuilder(get(), ListDatabase::class.java, LIST_DATABASE_NAME)
+            .fallbackToDestructiveMigration()
             .build()
     }
 

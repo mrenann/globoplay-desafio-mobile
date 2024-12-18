@@ -26,6 +26,7 @@ class TvDetailsRemoteDataSourceImpl(
             originalTitle = response.originalName,
             countries = response.originCountry,
             duration = 0,
+            type = "tv"
         )
     }
 

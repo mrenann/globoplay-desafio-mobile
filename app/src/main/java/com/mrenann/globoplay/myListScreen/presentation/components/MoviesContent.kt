@@ -3,8 +3,6 @@ package com.mrenann.globoplay.myListScreen.presentation.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -26,13 +24,11 @@ fun MoviesContent(
 
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .heightIn(max = 400.dp) // Constrain height to prevent infinite height
+            .fillMaxSize()
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-            verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
             items(pagingMovies.size) { index ->
@@ -41,7 +37,14 @@ fun MoviesContent(
                     ContentItem(
                         id = movie.id,
                         posterUrl = movie.posterPath,
-                        onClick = { navigator.push(DetailsScreen(movieId = movie.id)) }
+                        onClick = {
+                            navigator.push(
+                                DetailsScreen(
+                                    movieId = if (movie.type == "movie") movie.id else null,
+                                    tvId = if (movie.type == "tv") movie.id else null,
+                                )
+                            )
+                        }
                     )
                 }
             }

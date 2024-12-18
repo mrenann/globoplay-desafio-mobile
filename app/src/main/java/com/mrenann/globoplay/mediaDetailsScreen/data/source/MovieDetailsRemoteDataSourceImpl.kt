@@ -26,6 +26,7 @@ class MovieDetailsRemoteDataSourceImpl(
             originalTitle = response.originalTitle,
             countries = response.originCountry,
             duration = response.runtime,
+            type = "movie"
         )
     }
 

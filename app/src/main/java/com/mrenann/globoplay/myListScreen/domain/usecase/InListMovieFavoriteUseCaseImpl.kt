@@ -12,7 +12,7 @@ class InListMovieFavoriteUseCaseImpl(
 ) : InListMovieFavoriteUseCase {
     override suspend fun invoke(params: InListMovieFavoriteUseCase.Params): Flow<ResultData<Boolean>> {
         return flow {
-            val inList = movieFavoriteRepository.inList(params.id)
+            val inList = movieFavoriteRepository.inList(params.id, params.type)
             emit(ResultData.Success(inList))
         }.flowOn(Dispatchers.IO)
     }

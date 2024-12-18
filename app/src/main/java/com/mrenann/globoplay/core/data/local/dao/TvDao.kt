@@ -5,21 +5,21 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mrenann.globoplay.core.data.local.entity.TvEntity
+import com.mrenann.globoplay.core.data.local.entity.MediaEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TvDao {
-    @Query("SELECT * FROM Series")
-    fun getSeries(): Flow<List<TvEntity>>
+    @Query("SELECT * FROM Medias")
+    fun getSeries(): Flow<List<MediaEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSerie(Tv: TvEntity)
+    suspend fun insertSerie(Tv: MediaEntity)
 
-    @Query("SELECT * FROM Series WHERE tvId = :tvId")
-    suspend fun inList(tvId: Int): TvEntity?
+    @Query("SELECT * FROM Medias WHERE id = :tvId AND type = 'TV_SHOW'")
+    suspend fun inList(tvId: Int): MediaEntity?
 
     @Delete
-    suspend fun deleteSerie(movie: TvEntity)
+    suspend fun deleteSerie(movie: MediaEntity)
 
 }

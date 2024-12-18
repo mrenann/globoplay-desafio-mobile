@@ -1,5 +1,6 @@
 package com.mrenann.globoplay.myListScreen.data.repository
 
+import com.mrenann.globoplay.core.data.local.entity.MediaType
 import com.mrenann.globoplay.core.domain.model.Media
 import com.mrenann.globoplay.myListScreen.domain.repository.MovieFavoriteRepository
 import com.mrenann.globoplay.myListScreen.domain.source.MovieFavoriteLocalDataSource
@@ -12,16 +13,16 @@ class MovieFavoriteRepositoryImpl(
         return localDataSource.getMovies()
     }
 
-    override suspend fun insertMovie(movie: Media) {
-        return localDataSource.insertMovie(movie)
+    override suspend fun insertMovie(movie: Media, type: MediaType) {
+        return localDataSource.insertMovie(movie, type)
     }
 
-    override suspend fun inList(movieId: Int): Boolean {
-        return localDataSource.inList(movieId)
+    override suspend fun inList(movieId: Int, type: MediaType): Boolean {
+        return localDataSource.inList(movieId, type)
     }
 
-    override suspend fun delete(movie: Media) {
-        return localDataSource.delete(movie)
+    override suspend fun delete(movie: Media, type: MediaType) {
+        return localDataSource.delete(movie, type)
     }
 
 }

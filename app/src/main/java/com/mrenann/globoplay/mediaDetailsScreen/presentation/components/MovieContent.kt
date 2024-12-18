@@ -196,7 +196,7 @@ fun MovieContent(
                                     .height(48.dp)
                                     .width(48.dp)
                                     .clickable {
-                                        movie?.toMedia()?.let { onAddToList(it) }
+                                        movie?.toMedia(type = movie.type)?.let { onAddToList(it) }
                                     },
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center

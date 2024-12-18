@@ -1,6 +1,7 @@
 package com.mrenann.globoplay.myListScreen.di
 
 import com.mrenann.globoplay.core.data.local.dao.MovieDao
+import com.mrenann.globoplay.core.data.local.dao.TvDao
 import com.mrenann.globoplay.myListScreen.data.repository.MovieFavoriteRepositoryImpl
 import com.mrenann.globoplay.myListScreen.data.source.MovieFavoriteLocalDataSourceImpl
 import com.mrenann.globoplay.myListScreen.domain.repository.MovieFavoriteRepository
@@ -19,7 +20,7 @@ import org.koin.dsl.module
 val favoriteModule = module {
 
     single<MovieFavoriteLocalDataSource> {
-        MovieFavoriteLocalDataSourceImpl(movieDao = get<MovieDao>())
+        MovieFavoriteLocalDataSourceImpl(movieDao = get<MovieDao>(), tvDao = get<TvDao>())
     }
 
     single<MovieFavoriteRepository> {

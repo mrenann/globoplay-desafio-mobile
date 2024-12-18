@@ -12,7 +12,7 @@ class DeleteMovieFavoriteUseCaseImpl(
 ) : DeleteMovieFavoriteUseCase {
     override suspend fun invoke(params: DeleteMovieFavoriteUseCase.Params): Flow<ResultData<Unit>> {
         return flow {
-            val insert = movieFavoriteRepository.delete(params.media)
+            val insert = movieFavoriteRepository.delete(params.media, params.type)
             emit(ResultData.Success(insert))
         }.flowOn(Dispatchers.IO)
     }

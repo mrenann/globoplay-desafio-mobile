@@ -2,6 +2,7 @@ package com.mrenann.globoplay.mediaDetailsScreen.presentation.screenModels
 
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import com.mrenann.globoplay.core.data.local.entity.MediaType
 import com.mrenann.globoplay.core.domain.model.Media
 import com.mrenann.globoplay.core.util.ResultData
 import com.mrenann.globoplay.mediaDetailsScreen.domain.usecase.GetMovieDetailsUseCase
@@ -39,12 +40,12 @@ class DetailsScreenModel(
         event(getTvDetails)
     }
 
-    fun favorite(media: Media) {
+    fun favorite(media: Media, type: MediaType) {
         if (state.value is State.Result) {
             if ((state.value as State.Result).state.checked) {
-                event(MovieDetailsEvent.RemoveFavorite(media))
+                event(MovieDetailsEvent.RemoveFavorite(media, type))
             } else {
-                event(MovieDetailsEvent.AddFavorite(media))
+                event(MovieDetailsEvent.AddFavorite(media, type))
             }
         }
 
@@ -58,6 +59,7 @@ class DetailsScreenModel(
                     addMovieFavoriteUseCase.invoke(
                         params = AddMovieFavoriteUseCase.Params(
                             media = event.media,
+                            type = event.type
                         )
                     ).collectLatest { result ->
                         when (result) {
@@ -83,6 +85,7 @@ class DetailsScreenModel(
                     removeMovieFavoriteUseCase.invoke(
                         params = DeleteMovieFavoriteUseCase.Params(
                             media = event.media,
+                            type = event.type
                         )
                     ).collectLatest { result ->
                         when (result) {
@@ -107,7 +110,8 @@ class DetailsScreenModel(
                 screenModelScope.launch {
                     inListMovieUseCase.invoke(
                         params = InListMovieFavoriteUseCase.Params(
-                            id = event.id
+                            id = event.id,
+                            type = event.type
                         )
                     ).collectLatest { result ->
                         when (result) {

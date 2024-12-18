@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.collectAsLazyPagingItems
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
+import com.mrenann.globoplay.core.data.local.entity.MediaType
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.components.MovieContent
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.screenModels.DetailsScreenModel
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.screenModels.DetailsScreenModel.State
@@ -33,11 +34,22 @@ data class DetailsScreen(
         ) {
             if (movieId != null) {
                 screenModel.getMovieDetails(MovieDetailsEvent.GetMovieDetails(movieId))
-                screenModel.checkedFavorite(MovieDetailsEvent.CheckedFavorite(movieId))
+                screenModel.checkedFavorite(
+                    MovieDetailsEvent.CheckedFavorite(
+                        movieId,
+                        MediaType.MOVIE
+                    )
+                )
             }
 
             if (tvId != null) {
                 screenModel.getTvDetails(MovieDetailsEvent.GetTvDetails(tvId))
+                screenModel.checkedFavorite(
+                    MovieDetailsEvent.CheckedFavorite(
+                        tvId,
+                        MediaType.TV_SHOW
+                    )
+                )
             }
         }
 
@@ -66,7 +78,10 @@ data class DetailsScreen(
                             checked = checked,
                             modifier = Modifier,
                             onAddToList = { movie ->
-                                screenModel.favorite(movie)
+                                screenModel.favorite(
+                                    media = movie,
+                                    type = if (tvId != null) MediaType.TV_SHOW else MediaType.MOVIE
+                                )
                             }
                         )
                     }
