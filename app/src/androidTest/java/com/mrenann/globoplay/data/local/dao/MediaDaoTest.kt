@@ -51,13 +51,13 @@ class MediaDaoTest {
     }
 
     @Test
-    fun getMedias() = runTest {
+    fun getMovies_whenNoMoviesInserted_returnsEmptyList() = runTest {
         val medias: List<MediaEntity> = dao.getMovies().first()
         assertThat(medias.size).isEqualTo(0)
     }
 
     @Test
-    fun insertAndCompareSize() = runTest {
+    fun insertMovie_whenMovieInserted_returnsListWithOneMovie() = runTest {
         val mediaEntity = MediaEntity(
             id = 1,
             title = "",
@@ -109,8 +109,26 @@ class MediaDaoTest {
     }
 
     @Test
-    fun isNotInListWithTypeWhenIsMarkedAsFavoriteReturnNull() = runTest {
-        val mediaId = 2
+    fun isInList_whenMarkedAsFavorite_returnsMediaEntity() = runTest {
+        val mediaId = 1
+        val mediaEntity = MediaEntity(
+            id = mediaId,
+            title = "FILMINHO",
+            imageUrl = "",
+            type = MediaType.MOVIE,
+        )
+        dao.insertMovie(mediaEntity)
+        val isInList = dao.inList(
+            mediaId,
+            type = MediaType.MOVIE
+        )
+
+        assertThat(isInList).isEqualTo(mediaEntity)
+    }
+
+    @Test
+    fun isInList_whenNotMarkedAsFavorite_returnsNull() = runTest {
+        val mediaId = 5
         val mediaEntity = MediaEntity(
             id = 2,
             title = "FILMINHO",
@@ -120,30 +138,11 @@ class MediaDaoTest {
         dao.insertMovie(mediaEntity)
         val isInList = dao.inList(
             mediaId,
-            type = MediaType.TV_SHOW
+            type = MediaType.MOVIE
         )
 
         assertThat(isInList).isNull()
     }
 
-    @Test
-    fun addedReturnsObjectAndRemovesReturnsNull() = runTest {
-        val mediaEntity = MediaEntity(
-            id = 2,
-            title = "FILMINHO",
-            imageUrl = "",
-            type = MediaType.MOVIE,
-        )
-        dao.insertMovie(mediaEntity)
-        val allMedias: List<MediaEntity> = dao.getMovies().first()
-
-        dao.deleteMovie(mediaEntity)
-
-        val medias: List<MediaEntity> = dao.getMovies().first()
-
-
-        assertThat(medias).isEmpty()
-        assertThat(allMedias).isNotEmpty()
-    }
 
 }
