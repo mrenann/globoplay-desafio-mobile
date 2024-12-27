@@ -6,6 +6,7 @@ import com.mrenann.globoplay.core.data.remote.response.DiscoverMediaResponse
 import com.mrenann.globoplay.core.data.remote.response.MovieDetailsResponse
 import com.mrenann.globoplay.core.data.remote.response.SearchResponse
 import com.mrenann.globoplay.core.data.remote.response.TvDetailsResponse
+import com.mrenann.globoplay.core.data.remote.response.VideosResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -25,28 +26,38 @@ interface MediaService {
     @GET("search/multi")
     suspend fun search(
         @Query("page") page: Int,
-        @Query("query") query: String
+        @Query("query") query: String,
     ): SearchResponse
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(
-        @Path("movie_id") movieId: Int
+        @Path("movie_id") movieId: Int,
     ): MovieDetailsResponse
 
     @GET("movie/{movie_id}/similar")
     suspend fun getMoviesSimilar(
         @Path("movie_id") movieId: Int,
-        @Query("page") page: Int
+        @Query("page") page: Int,
     ): DiscoverMediaResponse<MovieResult>
 
     @GET("tv/{series_id}")
     suspend fun getTvSerie(
-        @Path("series_id") movieId: Int
+        @Path("series_id") movieId: Int,
     ): TvDetailsResponse
 
     @GET("tv/{series_id}/similar")
     suspend fun getSeriesSimilar(
         @Path("series_id") movieId: Int,
-        @Query("page") page: Int
+        @Query("page") page: Int,
     ): DiscoverMediaResponse<TVResult>
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        @Path("movie_id") movieId: Int,
+    ): VideosResponse
+
+    @GET("tv/{series_id}/videos")
+    suspend fun getTvShowVideos(
+        @Path("series_id") movieId: Int,
+    ): VideosResponse
 }

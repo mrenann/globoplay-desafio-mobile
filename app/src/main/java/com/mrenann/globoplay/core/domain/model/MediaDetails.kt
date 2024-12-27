@@ -11,6 +11,6 @@ data class MediaDetails(
     val originalTitle: String,
     val duration: Int = 0,
     val type: String,
-    val countries: List<String> = emptyList()
-
+    val countries: List<String> = emptyList(),
+    val videos: List<Videos> = emptyList(),
 )
