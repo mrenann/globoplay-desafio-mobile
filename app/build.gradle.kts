@@ -106,6 +106,10 @@ dependencies {
     implementation(libs.androidx.splashscreen)
     implementation(libs.composeIcons.evaIcons)
 
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
+
     ksp(libs.androidx.room.compiler)
     implementation(libs.truth)
     testImplementation(libs.kotlinx.coroutines.test)
