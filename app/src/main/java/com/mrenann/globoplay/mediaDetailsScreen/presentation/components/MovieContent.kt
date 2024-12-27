@@ -34,7 +34,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -67,6 +67,7 @@ import com.mrenann.globoplay.mediaDetailsScreen.data.mapper.toMedia
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.DetailsScreen
 import com.mrenann.globoplay.ui.theme.Background
 import com.mrenann.globoplay.ui.theme.GenreBackground
+import com.mrenann.globoplay.videoScreen.presentation.VideoScreen
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.Outline
@@ -85,7 +86,7 @@ fun MovieContent(
     onAddToList: (Media) -> Unit,
 ) {
     val navigator = LocalNavigator.currentOrThrow
-    var selected by remember { mutableStateOf(0) }
+    var selected by remember { mutableIntStateOf(0) }
     val titles = mutableListOf<String>("Similares", "Detalhes")
 
     if (movie?.videos?.isNotEmpty() == true) {
@@ -391,7 +392,15 @@ fun MovieContent(
                             LazyRow {
                                 items(movie?.videos?.size ?: 0) { index ->
                                     val video = movie?.videos?.get(index)
-                                    Column {
+                                    Column(
+                                        modifier = Modifier.clickable {
+                                            navigator.push(
+                                                VideoScreen(
+                                                    video = video
+                                                )
+                                            )
+                                        }
+                                    ) {
                                         AsyncImage(
                                             model = ImageRequest.Builder(LocalContext.current)
                                                 .data(
