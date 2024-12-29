@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -33,13 +34,15 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
@@ -49,16 +52,23 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import coil3.request.placeholder
+import com.mrenann.globoplay.R
 import com.mrenann.globoplay.core.domain.model.Media
 import com.mrenann.globoplay.core.domain.model.MediaDetails
 import com.mrenann.globoplay.core.presentation.components.ErrorView
 import com.mrenann.globoplay.core.presentation.components.LoadingView
+import com.mrenann.globoplay.core.presentation.components.PlaceholderItem
 import com.mrenann.globoplay.core.util.formatTime
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentItem
 import com.mrenann.globoplay.mediaDetailsScreen.data.mapper.toMedia
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.DetailsScreen
 import com.mrenann.globoplay.ui.theme.Background
 import com.mrenann.globoplay.ui.theme.GenreBackground
+import com.mrenann.globoplay.videoScreen.presentation.VideoScreen
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.Outline
@@ -74,11 +84,15 @@ fun MovieContent(
     isError: String,
     checked: Boolean,
     modifier: Modifier = Modifier,
-    onAddToList: (Media) -> Unit
+    onAddToList: (Media) -> Unit,
 ) {
     val navigator = LocalNavigator.currentOrThrow
-    var selected by remember { mutableStateOf(0) }
-    val titles = listOf("Similares", "Detalhes")
+    var selected by remember { mutableIntStateOf(0) }
+    val titles = mutableListOf<String>("Similares", "Detalhes")
+
+    if (movie?.videos?.isNotEmpty() == true) {
+        titles.add("Trailers e mais")
+    }
 
     Column {
         Scaffold(
@@ -261,13 +275,16 @@ fun MovieContent(
                     if (selected == 0) {
                         item {
                             LazyVerticalGrid(
-                                columns = GridCells.Fixed(3),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                columns = GridCells.FixedSize(100.dp),
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    8.dp,
+                                    Alignment.CenterHorizontally
+                                ),
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(400.dp) // Constrain the height
-                                    .padding(horizontal = 8.dp)
+                                    .padding(horizontal = 2.dp)
                             ) {
 
                                 items(pagingMoviesSimilar.itemCount) { index ->
@@ -275,6 +292,7 @@ fun MovieContent(
                                     movie?.let { movieElement ->
                                         ContentItem(
                                             id = movieElement.id,
+                                            title = movieElement.name,
                                             posterUrl = movieElement.posterPath,
                                             onClick = {
                                                 navigator.push(
@@ -291,20 +309,20 @@ fun MovieContent(
                                 pagingMoviesSimilar.apply {
                                     when {
                                         loadState.refresh is LoadState.Loading -> {
-                                            item(span = { GridItemSpan(maxLineSpan) }) {
-                                                LoadingView()
+                                            items(12) { // Number of placeholders to show during refresh
+                                                PlaceholderItem()
                                             }
                                         }
 
                                         loadState.prepend is LoadState.Loading -> {
-                                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                            item {
                                                 LoadingView()
                                             }
                                         }
 
                                         loadState.append is LoadState.Loading -> {
-                                            item(span = { GridItemSpan(maxLineSpan) }) {
-                                                LoadingView()
+                                            items(6) { // Number of placeholders for appending
+                                                PlaceholderItem()
                                             }
                                         }
 
@@ -371,6 +389,42 @@ fun MovieContent(
                                 Text(movie?.overview ?: "Sem descrição", color = Color.White)
 
                             }
+                        }
+                    }
+
+                    if (selected == 2) {
+                        item {
+                            LazyRow {
+                                items(movie?.videos?.size ?: 0) { index ->
+                                    val video = movie?.videos?.get(index)
+                                    Column(
+                                        modifier = Modifier.clickable {
+                                            navigator.push(
+                                                VideoScreen(
+                                                    video = video
+                                                )
+                                            )
+                                        }
+                                    ) {
+                                        AsyncImage(
+                                            model = ImageRequest.Builder(LocalContext.current)
+                                                .data(
+                                                    movie?.backdropPath ?: movie?.posterPath ?: ""
+                                                )
+                                                .crossfade(true)
+                                                .placeholder(R.drawable.globo)
+                                                .build(),
+                                            contentDescription = "",
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier.fillMaxWidth(0.5F)
+                                        )
+                                        Text("${video?.name}")
+                                    }
+
+                                }
+                            }
+
+
                         }
                     }
 

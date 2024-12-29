@@ -109,7 +109,7 @@ object InitialScreen : Screen {
     fun RowScope.TabNavigationItem(
         tab: Tab,
         selected: Boolean,
-        onClick: () -> Unit
+        onClick: () -> Unit,
     ) {
         val selectedColor = Color.White
         val unselectedColor = Color.DarkGray
