@@ -3,6 +3,7 @@ package com.mrenann.globoplay.myListScreen.presentation.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -18,16 +19,19 @@ import com.mrenann.globoplay.mediaDetailsScreen.presentation.DetailsScreen
 @Composable
 fun MoviesContent(
     pagingMovies: List<Media>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val navigator = LocalNavigatorParent.currentOrThrow
 
     Box(
         modifier = modifier
             .fillMaxSize()
+            .padding(8.dp)
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
+            columns = GridCells.FixedSize(
+                100.dp
+            ),
             horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
             modifier = Modifier.fillMaxSize()
         ) {
@@ -36,6 +40,7 @@ fun MoviesContent(
                 movie.let { movie ->
                     ContentItem(
                         id = movie.id,
+                        title = movie.name,
                         posterUrl = movie.posterPath,
                         onClick = {
                             navigator.push(

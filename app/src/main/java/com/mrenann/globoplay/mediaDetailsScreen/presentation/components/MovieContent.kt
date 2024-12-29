@@ -274,13 +274,16 @@ fun MovieContent(
                     if (selected == 0) {
                         item {
                             LazyVerticalGrid(
-                                columns = GridCells.Fixed(3),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                columns = GridCells.FixedSize(100.dp),
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    2.dp,
+                                    Alignment.CenterHorizontally
+                                ),
+                                verticalArrangement = Arrangement.spacedBy(2.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(400.dp) // Constrain the height
-                                    .padding(horizontal = 8.dp)
+                                    .padding(horizontal = 2.dp)
                             ) {
 
                                 items(pagingMoviesSimilar.itemCount) { index ->
@@ -288,6 +291,7 @@ fun MovieContent(
                                     movie?.let { movieElement ->
                                         ContentItem(
                                             id = movieElement.id,
+                                            title = movieElement.name,
                                             posterUrl = movieElement.posterPath,
                                             onClick = {
                                                 navigator.push(

@@ -42,6 +42,7 @@ fun ContentGrid(
                 item?.let {
                     ContentItem(
                         id = it.id,
+                        title = it.name,
                         posterUrl = it.posterPath,
                         onClick = { id -> onClick(id) },
                     )
