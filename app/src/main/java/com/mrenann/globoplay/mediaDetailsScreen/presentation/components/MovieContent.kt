@@ -61,6 +61,7 @@ import com.mrenann.globoplay.core.domain.model.Media
 import com.mrenann.globoplay.core.domain.model.MediaDetails
 import com.mrenann.globoplay.core.presentation.components.ErrorView
 import com.mrenann.globoplay.core.presentation.components.LoadingView
+import com.mrenann.globoplay.core.presentation.components.PlaceholderItem
 import com.mrenann.globoplay.core.util.formatTime
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentItem
 import com.mrenann.globoplay.mediaDetailsScreen.data.mapper.toMedia
@@ -276,10 +277,10 @@ fun MovieContent(
                             LazyVerticalGrid(
                                 columns = GridCells.FixedSize(100.dp),
                                 horizontalArrangement = Arrangement.spacedBy(
-                                    2.dp,
+                                    8.dp,
                                     Alignment.CenterHorizontally
                                 ),
-                                verticalArrangement = Arrangement.spacedBy(2.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(400.dp) // Constrain the height
@@ -308,20 +309,20 @@ fun MovieContent(
                                 pagingMoviesSimilar.apply {
                                     when {
                                         loadState.refresh is LoadState.Loading -> {
-                                            item(span = { GridItemSpan(maxLineSpan) }) {
-                                                LoadingView()
+                                            items(12) { // Number of placeholders to show during refresh
+                                                PlaceholderItem()
                                             }
                                         }
 
                                         loadState.prepend is LoadState.Loading -> {
-                                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                            item {
                                                 LoadingView()
                                             }
                                         }
 
                                         loadState.append is LoadState.Loading -> {
-                                            item(span = { GridItemSpan(maxLineSpan) }) {
-                                                LoadingView()
+                                            items(6) { // Number of placeholders for appending
+                                                PlaceholderItem()
                                             }
                                         }
 

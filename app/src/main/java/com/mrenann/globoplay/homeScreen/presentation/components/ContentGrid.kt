@@ -17,6 +17,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.mrenann.globoplay.core.domain.model.Media
 import com.mrenann.globoplay.core.presentation.components.ErrorView
 import com.mrenann.globoplay.core.presentation.components.LoadingView
+import com.mrenann.globoplay.core.presentation.components.PlaceholderItem
 
 @Composable
 fun ContentGrid(
@@ -52,8 +53,8 @@ fun ContentGrid(
             pagingItems.apply {
                 when {
                     loadState.refresh is LoadState.Loading -> {
-                        item {
-                            LoadingView()
+                        items(5) { // Number of placeholders to show during refresh
+                            PlaceholderItem()
                         }
                     }
 
@@ -64,8 +65,8 @@ fun ContentGrid(
                     }
 
                     loadState.append is LoadState.Loading -> {
-                        item {
-                            LoadingView()
+                        items(3) { // Number of placeholders for appending
+                            PlaceholderItem()
                         }
                     }
 
@@ -95,3 +96,5 @@ fun ContentGrid(
         }
     }
 }
+
+

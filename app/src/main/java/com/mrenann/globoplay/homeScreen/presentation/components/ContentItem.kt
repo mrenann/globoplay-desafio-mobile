@@ -39,7 +39,6 @@ fun ContentItem(
     Column(
         modifier =
             Modifier
-                .padding(3.dp)
                 .width(100.dp)
                 .height(150.dp)
                 .clickable { onClick(id) },
