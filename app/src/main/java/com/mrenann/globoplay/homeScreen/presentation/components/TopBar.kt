@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,6 +29,10 @@ import coil3.request.placeholder
 import com.mrenann.globoplay.R
 import com.mrenann.globoplay.core.util.BASE_AVATAR_URL
 import com.mrenann.globoplay.searchScreen.presentation.SearchScreen
+import compose.icons.EvaIcons
+import compose.icons.evaicons.Outline
+import compose.icons.evaicons.outline.Cast
+import compose.icons.evaicons.outline.Search
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +64,7 @@ fun TopBar(isScrolled: Boolean, navigator: Navigator) {
                 IconButton(onClick = { /* do something */ }) {
                     Icon(
                         tint = Color.White,
-                        imageVector = Icons.Filled.Share,
+                        imageVector = EvaIcons.Outline.Cast,
                         contentDescription = "Localized description",
                     )
                 }
@@ -72,7 +73,7 @@ fun TopBar(isScrolled: Boolean, navigator: Navigator) {
                 }) {
                     Icon(
                         tint = Color.White,
-                        imageVector = Icons.Filled.Search,
+                        imageVector = EvaIcons.Outline.Search,
                         contentDescription = "Localized description",
                     )
                 }
