@@ -3,12 +3,13 @@ package com.mrenann.globoplay.homeScreen.presentation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,46 +19,33 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import cafe.adriel.voyager.navigator.tab.Tab
-import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.mrenann.globoplay.homeScreen.presentation.components.ContentGrid
 import com.mrenann.globoplay.homeScreen.presentation.components.TopBar
 import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel
 import com.mrenann.globoplay.homeScreen.presentation.screenModels.DiscoverScreenModel.State
-import com.mrenann.globoplay.initialScreen.presentation.LocalNavigatorParent
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.DetailsScreen
 import com.mrenann.globoplay.mediaDetailsScreen.presentation.screenModels.DetailsScreenModel
 import com.mrenann.globoplay.ui.theme.Background
 
-object HomeScreen : Tab {
-    override val options: TabOptions
-        @Composable
-        get() {
-            val title = "Inicio"
-            val icon = rememberVectorPainter(Icons.Default.Home)
 
-            return remember {
-                TabOptions(
-                    index = 0u,
-                    title = title,
-                    icon = icon
-                )
-            }
-        }
-
+object HomeScreen : Screen {
     @Composable
     override fun Content() {
-        val navigator = LocalNavigatorParent.currentOrThrow
+
+        val navigator = LocalNavigator.currentOrThrow
         val listState = rememberLazyListState()
         val isScrolled by remember {
             derivedStateOf { listState.firstVisibleItemIndex > 1 || listState.firstVisibleItemScrollOffset > 1 }
         }
         val screenModel = koinScreenModel<DiscoverScreenModel>()
-        val screenModelDetails = koinScreenModel<DetailsScreenModel>()
+        koinScreenModel<DetailsScreenModel>()
         val state by screenModel.state.collectAsState()
 
         Box(
@@ -80,7 +68,18 @@ object HomeScreen : Tab {
                         Modifier
                             .fillMaxSize()
                             .background(Background)
-                            .padding(innerPadding), // Adjust for the top bar
+                            .padding(
+                                PaddingValues(
+                                    top = innerPadding.calculateTopPadding(),
+                                    start = innerPadding.calculateStartPadding(
+                                        layoutDirection = LayoutDirection.Ltr
+                                    ),
+                                    bottom = 0.dp,
+                                    end = innerPadding.calculateEndPadding(
+                                        layoutDirection = LayoutDirection.Ltr
+                                    ),
+                                )
+                            ), // Adjust for the top bar
                 ) {
                     items(1) { index ->
                         when (state) {
@@ -103,7 +102,7 @@ object HomeScreen : Tab {
                                     (state as State.Result).state.movies.collectAsLazyPagingItems()
                                 val moviesBr =
                                     (state as State.Result).state.moviesFromBrazil.collectAsLazyPagingItems()
-                                val getMovieDetails = screenModelDetails::getMovieDetails
+//                                val getMovieDetails = screenModelDetails::getMovieDetails
                                 ContentGrid(
                                     title = "Séries",
                                     pagingItems = series,

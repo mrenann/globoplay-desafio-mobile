@@ -29,7 +29,8 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import com.mrenann.globoplay.homeScreen.presentation.HomeScreen
+import com.mrenann.globoplay.homeScreen.presentation.HomeTab
+import com.mrenann.globoplay.homeScreen.presentation.ResettableTab
 import com.mrenann.globoplay.myListScreen.MyListScreen
 
 val LocalNavigatorParent = staticCompositionLocalOf<Navigator?> { null }
@@ -40,9 +41,9 @@ object InitialScreen : Screen {
         val navigatorParent = LocalNavigator.current
 
         TabNavigator(
-            HomeScreen, tabDisposable = {
+            HomeTab, tabDisposable = {
                 TabDisposable(
-                    navigator = it, tabs = listOf(HomeScreen, MyListScreen)
+                    navigator = it, tabs = listOf(HomeTab, MyListScreen)
                 )
             }
 
@@ -55,7 +56,7 @@ object InitialScreen : Screen {
 
     @Composable
     fun HomeContent() {
-        val tabs = listOf(HomeScreen, MyListScreen)
+        val tabs = listOf(HomeTab, MyListScreen)
         Surface(modifier = Modifier.fillMaxSize()) {
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
@@ -89,19 +90,22 @@ object InitialScreen : Screen {
 
     @Composable
     private fun BottomNavigationBar(tabs: List<Tab>) {
+        val tabNavigator = LocalTabNavigator.current
 
         NavigationBar(
             containerColor = Color.Black
         ) {
-            val tabNavigator = LocalTabNavigator.current
-            tabs.forEachIndexed { index, tab ->
+            tabs.forEach { tab ->
                 TabNavigationItem(
                     tab = tab,
                     selected = tabNavigator.current.key == tab.key,
-                    onClick = { tabNavigator.current = tab }
+                    onClick = {
+                        (tab as? ResettableTab)?.resetToRoot?.invoke().run {
+                            tabNavigator.current = tab
+                        }
+                    }
                 )
             }
-
         }
     }
 
