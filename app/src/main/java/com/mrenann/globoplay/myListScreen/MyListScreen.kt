@@ -21,16 +21,17 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import com.mrenann.globoplay.homeScreen.presentation.ResettableTab
 import com.mrenann.globoplay.myListScreen.presentation.components.MoviesContent
 import com.mrenann.globoplay.myListScreen.presentation.screenModel.MovieFavoriteScreenModel
 import com.mrenann.globoplay.myListScreen.presentation.screenModel.MovieFavoriteScreenModel.State
 import com.mrenann.globoplay.ui.theme.Background
 
-object MyListScreen : Tab {
+object MyListScreen : Tab, ResettableTab {
     override val options: TabOptions
         @Composable
         get() {
-            val title = "Minha Lista"
+            val title = "Meu Globoplay"
             val icon = rememberVectorPainter(Icons.Default.Star)
 
             return remember {
@@ -83,7 +84,7 @@ object MyListScreen : Tab {
 
                     is State.Result -> {
                         MoviesContent(
-                            pagingMovies = (state as State.Result).state.movies,
+                            pagingMovies = (state as State.Result).state.movies.reversed(),
                             modifier = Modifier.fillMaxSize()
                         )
                     }
@@ -93,4 +94,9 @@ object MyListScreen : Tab {
 
 
     }
+
+    override val resetToRoot: () -> Unit
+        get() = {
+
+        }
 }
