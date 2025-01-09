@@ -1,7 +1,7 @@
 package com.mrenann.globoplay.mediaDetailsScreen.presentation
 
 import android.annotation.SuppressLint
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,7 +19,7 @@ import com.mrenann.globoplay.mediaDetailsScreen.presentation.state.MovieDetailsE
 
 data class DetailsScreen(
     val movieId: Int? = null,
-    val tvId: Int? = null
+    val tvId: Int? = null,
 ) : Screen {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
@@ -53,41 +53,39 @@ data class DetailsScreen(
             }
         }
 
-        Scaffold(
-            content = {
-                when (state) {
-                    is State.Init -> {
-                        Text("INICIO...")
-                    }
+        Column {
+            when (state) {
+                is State.Init -> {
+                    Text("INICIO...")
+                }
 
-                    is State.Loading -> {
-                        Text("LOADING...")
-                    }
+                is State.Loading -> {
+                    Text("LOADING...")
+                }
 
-                    is State.Result -> {
-                        val movie = (state as State.Result).state.movie
-                        val results =
-                            (state as State.Result).state.results.collectAsLazyPagingItems()
-                        val checked = (state as State.Result).state.checked
+                is State.Result -> {
+                    val movie = (state as State.Result).state.movie
+                    val results =
+                        (state as State.Result).state.results.collectAsLazyPagingItems()
+                    val checked = (state as State.Result).state.checked
 
-                        MovieContent(
-                            movie = movie,
-                            pagingMoviesSimilar = results,
-                            isLoading = false,
-                            isError = "",
-                            checked = checked,
-                            modifier = Modifier,
-                            onAddToList = { movie ->
-                                screenModel.favorite(
-                                    media = movie,
-                                    type = if (tvId != null) MediaType.TV_SHOW else MediaType.MOVIE
-                                )
-                            }
-                        )
-                    }
+                    MovieContent(
+                        movie = movie,
+                        pagingMoviesSimilar = results,
+                        isLoading = false,
+                        isError = "",
+                        checked = checked,
+                        modifier = Modifier,
+                        onAddToList = { movie ->
+                            screenModel.favorite(
+                                media = movie,
+                                type = if (tvId != null) MediaType.TV_SHOW else MediaType.MOVIE
+                            )
+                        }
+                    )
                 }
             }
-        )
+        }
 
     }
 }
