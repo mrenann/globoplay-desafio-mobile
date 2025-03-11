@@ -54,6 +54,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -111,6 +112,7 @@ fun MovieContent(
     val scrollOffset = listState.firstVisibleItemScrollOffset
     val contentHeight = remember { mutableFloatStateOf(0f) }
     val fadeOutAlpha = 1f - (scrollOffset / (contentHeight.floatValue * 0.8F)).coerceIn(0f, 1f)
+    val titles = mutableListOf<String>("Similares", "Detalhes")
 
     LaunchedEffect(movie) {
         listState.scrollToItem(0) // Reset scroll position when movie changes
@@ -148,6 +150,10 @@ fun MovieContent(
             } else {
                 ""
             }
+    }
+
+    if (movie?.videos?.isNotEmpty() == true) {
+        titles.add("Trailers e mais")
     }
 
     // Detect when the user stops scrolling
@@ -334,20 +340,23 @@ fun MovieContent(
                             SecondaryTabRow(
                                 containerColor = Background,
                                 contentColor = Color.Gray,
-                                selectedTabIndex = 0,
+                                selectedTabIndex = selected,
                                 modifier = Modifier,
                             ) {
-                                // Example tabs
-                                Tab(
-                                    text = { Text("Similares", color = Color.White) },
-                                    selected = true,
-                                    onClick = {}
-                                )
-                                Tab(
-                                    text = { Text("Detalhes", color = Color.Gray) },
-                                    selected = false,
-                                    onClick = {}
-                                )
+                                titles.forEachIndexed { index, title ->
+                                    Tab(
+                                        text = {
+                                            Text(
+                                                color = if (index == selected) Color.White else Color.Gray,
+                                                text = title,
+                                                maxLines = 2,
+                                                overflow = TextOverflow.Ellipsis
+                                            )
+                                        },
+                                        onClick = { selected = index },
+                                        selected = (index == selected)
+                                    )
+                                }
                             }
 
 
@@ -470,7 +479,9 @@ fun MovieContent(
                             }
 
                             if (selected == 2) {
-                                LazyRow {
+                                LazyRow(
+                                    modifier = Modifier.padding(2.dp)
+                                ) {
                                     items(movie?.videos?.size ?: 0) { index ->
                                         val video = movie?.videos?.get(index)
                                         Column(
