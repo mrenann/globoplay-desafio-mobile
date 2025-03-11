@@ -19,7 +19,7 @@ fun GenreTag(
 ) {
     Box(
         modifier = Modifier
-            .padding(horizontal = 4.dp)
+            .padding(2.dp)
             .background(
                 color = GenreBackground,
                 shape = RoundedCornerShape(5.dp)
